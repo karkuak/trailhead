@@ -1,0 +1,49 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "local-1.0-mrjmez33-299605f6",
+  "journey_id": "cancellation",
+  "snapshot_id": "sha256:8528f82c46cc1bb4cf9b51326eb695985c649f4e12659893874db070c650cd10",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "advisory",
+    "journey_id": "cancellation",
+    "rule_id": "cancellation_sequence",
+    "inputs_digest": "evp_05310c6b8a85",
+    "eligibility_digest": "sha256:41ad503310ea31e8a27ab104a34db9530f870875645b3f713f5d65e03dc03f96",
+    "version_linkage": {
+      "rule_contract_version": "cancellation_v1",
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "playwright_collector_0.1"
+    },
+    "run_context": {
+      "run_id": "local-1.0-mrjmez33-299605f6",
+      "ci_run_id": "local",
+      "workflow_run_attempt": "1",
+      "repository": "local",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": null
+    },
+    "decision_time": "2026-07-13T19:34:00.735Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:8528f82c46cc1bb4cf9b51326eb695985c649f4e12659893874db070c650cd10",
+    "content_hash": "sha256:8528f82c46cc1bb4cf9b51326eb695985c649f4e12659893874db070c650cd10",
+    "emitted_at": "2026-07-13T19:34:00.737Z",
+    "signature": {
+      "status": "unsigned_pending",
+      "mode": "provenance",
+      "subject": "unconfigured",
+      "issuer": "none",
+      "value": null
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:34:00.737Z"
+}

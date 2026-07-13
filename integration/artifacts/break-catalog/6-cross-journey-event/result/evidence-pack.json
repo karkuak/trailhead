@@ -1,0 +1,50 @@
+{
+  "schema_version": "evidence_pack_v0.1",
+  "rule_id": "cancellation_sequence",
+  "journey_id": "cancellation",
+  "test_id": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+  "ci_run_id": "local",
+  "mode": "observe",
+  "validation_status": "rule_violation_detected",
+  "ci_blocking": false,
+  "collector_health": "healthy",
+  "findings": [
+    {
+      "finding": "forbidden_event_observed",
+      "severity": "high",
+      "association_confidence": "high",
+      "association_blocking_eligible": true,
+      "policy_blocking_allowed": false,
+      "event": "order_completed",
+      "note": "forbidden event observed"
+    }
+  ],
+  "observed": {
+    "modeled": [
+      "cancellation_started",
+      "save_offer_shown",
+      "cancellation_completed",
+      "order_completed"
+    ],
+    "knownUnknown": [],
+    "unmodeled": [
+      "signup_started",
+      "identify",
+      "signup_completed",
+      "onboarding_started"
+    ]
+  },
+  "excluded_candidates": {
+    "background": [],
+    "orphaned": [],
+    "late": [
+      "onboarding_completed",
+      "plan_preview_viewed",
+      "plan_viewed",
+      "upgrade_started",
+      "trial_converted",
+      "plan_viewed"
+    ],
+    "unknown": []
+  }
+}

@@ -1,0 +1,795 @@
+{
+  "schemaVersion": "test_run_capture_v0.1",
+  "testRunId": "run_0_0",
+  "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+  "journeyId": "cancellation",
+  "ciRunId": "local",
+  "events": [
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "40e72399-ab1a-4b93-b18b-01cb0dce2b4c",
+      "collectorSeq": 10,
+      "sourceEventName": "cancellation_started",
+      "canonicalEventName": "cancellation_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.729Z",
+      "relTs": 123,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail",
+        "subscriptionStatus": "active"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "41405d58b31c41693bcbc6d39d7990efb052e45659334b9fcbaa2a38d724ae9c",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153729,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "cancellation",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "10"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "da567830-040a-42a6-b962-c2cbe05cd7c0",
+      "collectorSeq": 11,
+      "sourceEventName": "save_offer_shown",
+      "canonicalEventName": "save_offer_shown",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.729Z",
+      "relTs": 123,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1df62b98ba925d9fc3f984e3a3b39a2ca95f602fc19eed46f1367843c7e2e9c8",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153729,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "cancellation",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "11"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "75134c77-a5e7-4c56-a15d-535ad764b82f",
+      "collectorSeq": 0,
+      "sourceEventName": "signup_started",
+      "canonicalEventName": "signup_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:32.761Z",
+      "relTs": 141,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "method": "email"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "3bf2ec66c3705d32dc88ac04fa1f2429ac2df52108a6756738760f14d4356e96",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971152761,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "0"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "cb2d937e-31fd-41c6-b17e-ed65a93edda9",
+      "collectorSeq": 12,
+      "sourceEventName": "cancellation_completed",
+      "canonicalEventName": "cancellation_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.864Z",
+      "relTs": 258,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail",
+        "canceledAt": "2026-07-13T19:32:33.816Z"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "2a8dfa180e6dd5c2762a361eb7fb282d4c2ff9073f034aa0aa7425039b063ad1",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153864,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "cancellation",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "12"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "60e88332-9be6-416c-b0e3-514d550c763a",
+      "collectorSeq": 1,
+      "sourceEventName": "identify",
+      "canonicalEventName": "identify",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:32.912Z",
+      "relTs": 292,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "email": "[redacted]",
+        "name": "[redacted]",
+        "userId": "user_f08e6697-ac6b-47fc-bf0b-1fb437822813"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "00133aa6bb60578273541f89ca9b7ebf396853c7a6a4606394dc640a5c84214e",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971152912,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "1"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "04dbec91-7e8d-429f-9082-4b033f443228",
+      "collectorSeq": 2,
+      "sourceEventName": "signup_completed",
+      "canonicalEventName": "signup_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:32.912Z",
+      "relTs": 292,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "userId": "user_f08e6697-ac6b-47fc-bf0b-1fb437822813",
+        "trialEndsAt": "2026-07-27T19:32:32.803Z"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "fbea5a1e57c98610035878fd9a1309e9ea56dabf46bfb70c7ebf2404f885d039",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971152912,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "2"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "45dad180-92ec-4e0c-8589-44f09469c9e6",
+      "collectorSeq": 3,
+      "sourceEventName": "onboarding_started",
+      "canonicalEventName": "onboarding_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.008Z",
+      "relTs": 388,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {},
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "a98a708660bae7ce862c1796faa66ddccc3dd1f0e308bcbefd37641ed6e9aa26",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153008,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "3"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "9d5dafa4-078f-4e79-a353-ffd822d293ce",
+      "collectorSeq": 4,
+      "sourceEventName": "onboarding_completed",
+      "canonicalEventName": "onboarding_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.135Z",
+      "relTs": 515,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "experienceLevel": "aspiring-regular",
+        "season": "fall",
+        "suggestedPlan": "trail"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1089dbfd1fbd7f597a1d36bba4d223975e08c69826364a61f3eef78ff06227cf",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153135,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "4"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "bffb56e3-dee6-40e7-a138-5d4e642c8f4b",
+      "collectorSeq": 5,
+      "sourceEventName": "plan_preview_viewed",
+      "canonicalEventName": "plan_preview_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.195Z",
+      "relTs": 575,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "f7172e816edc0eed05d9aacfdf1b22692bcab19662e4a0466c37d6c180b15bc5",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153195,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "5"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "82b980a7-19b9-47af-b23f-6148ae592ae7",
+      "collectorSeq": 6,
+      "sourceEventName": "plan_viewed",
+      "canonicalEventName": "plan_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.351Z",
+      "relTs": 731,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail",
+        "subscriptionStatus": "trialing"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "945800445a4951a9016d180e368fe14e0e452058e6bcdbb861cda7615367e942",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153351,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "6"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "563f8e03-8227-4eb4-b00b-e4b2868d1b18",
+      "collectorSeq": 7,
+      "sourceEventName": "upgrade_started",
+      "canonicalEventName": "upgrade_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.394Z",
+      "relTs": 774,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "fromPlan": "trail"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "e3c85d1eadcc5ecfbb1117d734b60e0c3c91061f019cfc81a3ceb2415d5187b6",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153394,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "7"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "f0343747-058d-46ea-88b8-1d1a9ee35674",
+      "collectorSeq": 8,
+      "sourceEventName": "trial_converted",
+      "canonicalEventName": "trial_converted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.513Z",
+      "relTs": 893,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail",
+        "previousPlan": "trail",
+        "mrrCents": 3900
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "8b8c7979e265145aabc771245a86b27e6bb6748cd639d6c3631ef8566d175a6f",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153513,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "8"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "7ec428f9-b882-4bd3-8d12-013bee88d35f",
+      "collectorSeq": 9,
+      "sourceEventName": "plan_viewed",
+      "canonicalEventName": "plan_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:32:33.559Z",
+      "relTs": 939,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "plan": "trail",
+        "subscriptionStatus": "active"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.95,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched",
+        "within grace window"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": true,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "excluded",
+      "flags": [
+        "late",
+        "associated"
+      ],
+      "eventClass": "late",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1141c413d98d761617b40126378ee5f68c7fc5cc80092276551c2cbc08d93ec8",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971153559,
+        "normalizationTs": 1783971154000,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "unknown",
+      "testId": "j4-cancellation.spec.ts > J4 — Cancellation > member can decline every save offer and cancel cleanly",
+      "networkRequestId": "9"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "injected-order-completed",
+      "collectorSeq": 13,
+      "sourceEventName": "order_completed",
+      "canonicalEventName": "order_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:37.598Z",
+      "relTs": 1168,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_ff2c69f3-d6ee-4937-9455-cb524e8f69da",
+        "totalCents": 3400,
+        "recovered": false,
+        "attemptNumber": 1
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "c4686440d259f50c147c5d93c09985d054580026b0656a55382198a4db5adf8a",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967917598,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "5"
+    }
+  ],
+  "markers": [
+    {
+      "kind": "start",
+      "ts": 1783971153606,
+      "relTs": 0
+    },
+    {
+      "kind": "end",
+      "ts": 1783971154000,
+      "relTs": 394
+    }
+  ],
+  "summary": {
+    "schemaVersion": "collector_run_summary_v0.1",
+    "health": "healthy",
+    "eventsCaptured": 13,
+    "eventsValidationEligible": 7,
+    "eventsBackground": 0,
+    "eventsLate": 6,
+    "eventsOrphaned": 0,
+    "eventsUnknown": 0,
+    "interceptionErrors": 0,
+    "unsupportedBodyTypesObserved": [],
+    "captureStarted": true,
+    "captureEndedCleanly": true
+  }
+}

@@ -1,0 +1,580 @@
+{
+  "schemaVersion": "test_run_capture_v0.1",
+  "testRunId": "run_0_0",
+  "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+  "journeyId": "checkout_payment_retry",
+  "ciRunId": "local",
+  "events": [
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "cc67f9c4-59aa-43f5-8c62-2aa3d087d4e2",
+      "collectorSeq": 0,
+      "sourceEventName": "page_viewed",
+      "canonicalEventName": "page_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.222Z",
+      "relTs": 56,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "page": "shop"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1f888e9e69efc3c1d93b082ecf9325baa14ef3b3e4dd5f9f4ced16bee0c07489",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918222,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "0"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "cf307643-a1d5-4721-a042-99a0718f4403",
+      "collectorSeq": 1,
+      "sourceEventName": "product_added_to_cart",
+      "canonicalEventName": "product_added_to_cart",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.262Z",
+      "relTs": 96,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "productId": "prod_headlamp",
+        "priceCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "47050ae4fbba4eaf411d208bee614f327a5cdaa36472f3791e09de52e3fe0f99",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918262,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "1"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "f9f0b96b-e61c-48f6-b75a-bcd28899724e",
+      "collectorSeq": 2,
+      "sourceEventName": "checkout_started",
+      "canonicalEventName": "checkout_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.342Z",
+      "relTs": 176,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "itemCount": 1,
+        "totalCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "5db0bdfc5155c10ba29738fdc77860cbf319fcd4d3b4ce7483ca30226007b565",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918342,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "2"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "2e9c8595-eb32-46c0-94f6-8cc84ac09207",
+      "collectorSeq": 3,
+      "sourceEventName": "experiment_viewed",
+      "canonicalEventName": "experiment_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.342Z",
+      "relTs": 176,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "experiment": "checkout_button_copy",
+        "variant": "control"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "8b2a4ec4a6eb483c8167b89c270e36e0a48fbfe5ce859c6665775816cbba1124",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918342,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "3"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "81428901-c602-47d0-8e44-79e828004d56",
+      "collectorSeq": 4,
+      "sourceEventName": "payment_submitted",
+      "canonicalEventName": "payment_submitted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.410Z",
+      "relTs": 244,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": null,
+        "attemptNumber": 1,
+        "cardLast4": "[redacted]"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "16d770d22d907e90a29bebbb48db5cb4231ef7b27829a4448e98dfe643cfc5ac",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918410,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "4"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "flaky-duplicate",
+      "collectorSeq": 9,
+      "sourceEventName": "payment_submitted",
+      "canonicalEventName": "payment_submitted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.415Z",
+      "relTs": 244,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": null,
+        "attemptNumber": 1,
+        "cardLast4": "[redacted]"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "16d770d22d907e90a29bebbb48db5cb4231ef7b27829a4448e98dfe643cfc5ac",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918410,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "4"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "ee72ae65-ad6d-4ce8-8ffb-9a16a9858e94",
+      "collectorSeq": 5,
+      "sourceEventName": "payment_failed",
+      "canonicalEventName": "payment_failed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:38.743Z",
+      "relTs": 577,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_b2bcfecc-4fdc-4b28-9f0a-4d6471bf30de",
+        "attemptNumber": 1,
+        "reason": "card_declined"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "932c04348c195d986c374680abdde451ed4f654f99725415ff9b2479a3684fd2",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967918743,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "5"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "283dec79-a3b7-4f73-a46f-3958c51d55fd",
+      "collectorSeq": 6,
+      "sourceEventName": "payment_retried",
+      "canonicalEventName": "payment_retried",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:39.248Z",
+      "relTs": 1082,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_b2bcfecc-4fdc-4b28-9f0a-4d6471bf30de",
+        "previousAttempt": 1
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "69806b93f00f1891144d01c5cc302662dadaa566ca4b0c1659782aaa2df3f7c4",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967919248,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "6"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "d59f0bd4-aa60-43c7-b8c7-2620cd423aba",
+      "collectorSeq": 7,
+      "sourceEventName": "payment_submitted",
+      "canonicalEventName": "payment_submitted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:39.248Z",
+      "relTs": 1082,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_b2bcfecc-4fdc-4b28-9f0a-4d6471bf30de",
+        "attemptNumber": 2,
+        "cardLast4": "[redacted]"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "af707085749160d7aeed388b1ba0d6611c6cc3126ea910b10929890c7346436b",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967919248,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "7"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "19fa26b4-f64e-4512-94e2-54462e7cd1a8",
+      "collectorSeq": 8,
+      "sourceEventName": "order_completed",
+      "canonicalEventName": "order_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:39.500Z",
+      "relTs": 1334,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_b2bcfecc-4fdc-4b28-9f0a-4d6471bf30de",
+        "totalCents": 3400,
+        "recovered": true,
+        "attemptNumber": 2
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "5a71bb0b97210a5922d280d8d2d2b6ba22d036df28dd377b036842362a4acd38",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967919500,
+        "normalizationTs": 1783967919542,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a declined first attempt recovers cleanly on retry, and is tracked as recovered",
+      "networkRequestId": "8"
+    }
+  ],
+  "markers": [
+    {
+      "kind": "start",
+      "ts": 1783967918166,
+      "relTs": 0
+    },
+    {
+      "kind": "end",
+      "ts": 1783967919542,
+      "relTs": 1376
+    }
+  ],
+  "summary": {
+    "schemaVersion": "collector_run_summary_v0.1",
+    "health": "healthy",
+    "eventsCaptured": 9,
+    "eventsValidationEligible": 9,
+    "eventsBackground": 0,
+    "eventsLate": 0,
+    "eventsOrphaned": 0,
+    "eventsUnknown": 0,
+    "interceptionErrors": 0,
+    "unsupportedBodyTypesObserved": [],
+    "captureStarted": true,
+    "captureEndedCleanly": true
+  }
+}
