@@ -291,3 +291,50 @@ set by hand, with zero change to the tool's actual code path (same failure firew
 comment poster, same Check Run poster — this is not a reimplementation, it's calling the exact
 same compiled entry point GitHub would have invoked, just without GitHub's action-resolution step
 in between). Rewriting both workflows to do this.
+
+**2026-07-13T18:50Z** — [Sev: High] Pushed the fix and re-ran. New failure, one layer deeper:
+`actions/checkout@v4` for `karkuak/qualiber` itself fails — `remote: Repository not found` / exit
+128 — **even a plain git clone of the private tool repo doesn't work with the default
+`GITHUB_TOKEN`.** This generalizes Step 6's finding: it isn't specifically about action
+resolution, it's that the default `GITHUB_TOKEN` GitHub issues to a workflow run is scoped only to
+the repo the workflow lives in (`karkuak/trailhead`) and has zero access to any other repo, private
+or not, same account or not. There is no supported way around this without a cross-repo credential
+(a PAT, or a GitHub App installation with access to both repos) — and I can't mint a fine-grained
+PAT myself (GitHub deliberately has no API for creating one; it's an interactive, consent-gated
+web flow only). Asked the user to create one (`trailhead-ci-qualiber-readonly`, read-only Contents
+access to `qualiber` only) via the browser while I continued exercising capabilities locally.
+
+## Step 7 — Capabilities exercised locally while waiting on the PAT
+
+All of the below were run directly via the vendored CLI (`.qualiber-vendor/src/cli.ts`), not
+through CI, since local CLI runs don't need the cross-repo credential the packaged Action does.
+Real command + real output for each is in this repo's shell history / `integration/artifacts/`.
+
+- **Observe vs. advisory modes:** both confirmed to exit 0 even on a genuine
+  `rule_violation_detected` (`integration/artifacts/cap-observe-mode`,
+  `cap-advisory-mode`) — observe truly never blocks, and advisory only adds the (gated)
+  PR-comment eligibility check, never a build-breaking exit.
+- **AI explain, template provider:** clean, guardrail-passed, offline, no API key
+  (`cap-explain-template/explanation.json`).
+- **AI explain, anthropic provider, no API key configured:** fell back to the template exactly as
+  documented — `guardrailPassed: false`, `violations: [{"rule":"provider_error", ...}]`,
+  `fellBackToTemplate: true` (`cap-explain-anthropic/explanation.json`). [Sev: Low] I don't have an
+  `ANTHROPIC_API_KEY` available in this environment, so the live-model path itself (rather than its
+  fallback) is unexercised — noted as a gap in CAPABILITY-RESULTS.md rather than assumed to work.
+- **Feedback:** `feedback --action false_positive ...` correctly appended to
+  `telemetrytest.feedback.yaml` and rolled into the calibration dataset
+  (`cap-feedback`, `integration/artifacts/telemetrytest.feedback.yaml`).
+- **Trust policy / signed decision records / verify:** generated a real Ed25519 keypair, ran a
+  signed `validate` (`TT_SIGNING=ed25519`), merged the shard into a ledger, and `verify` reported
+  `OK — tampered 0`. Then hand-edited one byte of the committed `decisions.jsonl`
+  (`"advisory"` → `"block"`) and re-ran `verify`: it correctly reported
+  `NOT CLEAN — tampered 1` with the exact recorded-vs-recomputed hash mismatch
+  (`cap-trust/`). This is a real tamper-detection proof, not just reading the ADR.
+- **Eligibility gate + advisory PR comment (the actual populated content):** seeded 3 observe runs
+  + 3 role approvals into a fresh canonical state directory (same technique
+  `mock-app/run-pilot-1b.sh` uses), then ran one advisory validate against that state:
+  `Advisory comment eligible: Yes`, and `advisory-comment.md` rendered a real,
+  correctly-formatted comment body (VQS band, collector health, association confidence breakdown,
+  known-unknowns list, evidence pack id) — confirming the very first, unseeded advisory run's
+  "eligible: No (insufficient_observe_runs, ...)" from Step 6 was the gate working correctly, not a
+  bug (`cap-eligibility/`).

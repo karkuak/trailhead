@@ -1,0 +1,49 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "seed-advisory-1.0",
+  "journey_id": "checkout_payment_retry",
+  "snapshot_id": "sha256:723b415d878645993890b1da748bc5ce257e4d2517e6f9abd30b51bf51cd354f",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "advisory",
+    "journey_id": "checkout_payment_retry",
+    "rule_id": "checkout_payment_retry_sequence",
+    "inputs_digest": "evp_02a7422aaf9f",
+    "eligibility_digest": "sha256:fc7775b38c8a2969bff39e8bcbf5805284f4cd22677318c6374f2d755f6d309e",
+    "version_linkage": {
+      "rule_contract_version": "checkout_payment_retry_v1",
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "playwright_collector_0.1"
+    },
+    "run_context": {
+      "run_id": "seed-advisory-1.0",
+      "ci_run_id": "seed-advisory",
+      "workflow_run_attempt": "1",
+      "repository": "karkuak/trailhead",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": "https://github.com/karkuak/trailhead/actions/runs/seed-advisory"
+    },
+    "decision_time": "2026-07-13T19:16:02.662Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:723b415d878645993890b1da748bc5ce257e4d2517e6f9abd30b51bf51cd354f",
+    "content_hash": "sha256:723b415d878645993890b1da748bc5ce257e4d2517e6f9abd30b51bf51cd354f",
+    "emitted_at": "2026-07-13T19:16:02.670Z",
+    "signature": {
+      "status": "unsigned_pending",
+      "mode": "provenance",
+      "subject": "unconfigured",
+      "issuer": "none",
+      "value": null
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:16:02.670Z"
+}

@@ -1,0 +1,10 @@
+{
+  "eligibility_schema_version": "1.0",
+  "journey_id": "checkout_payment_retry",
+  "runs": [],
+  "human_approvals": [],
+  "current_mode": "observe",
+  "advisory_eligible": false,
+  "rollback_recommended": false,
+  "last_evaluated_at": "2026-07-13T19:14:40.472Z"
+}

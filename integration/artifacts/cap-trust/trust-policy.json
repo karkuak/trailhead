@@ -1,0 +1,11 @@
+{
+  "allowed_issuers": [],
+  "allowed_subjects": [],
+  "public_keys": [
+    {
+      "key_id": "trailhead-2026",
+      "valid_from": "2026-01-01T00:00:00.000Z",
+      "public_key_ref": "/Users/karthik/Claude/Projects/Trailhead/trailhead/integration/artifacts/cap-trust/signing-pub.pem"
+    }
+  ]
+}
