@@ -1,9 +1,24 @@
-import { test, expect } from "@playwright/test";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { test, expect } from "./telemetrytest-fixture";
 import { resetAppState, signUp, completeOnboarding, uniqueEmail } from "./helpers";
 
+const CAPTURE_DIR = path.join("telemetrytest-out", "trial_conversion");
+
 test.describe("J2 — Trial to subscription conversion", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, telemetryTest }) => {
     await resetAppState(page);
+    await telemetryTest.startJourney("trial_conversion");
+  });
+
+  test.afterEach(async ({ telemetryTest }, testInfo) => {
+    await telemetryTest.endJourney();
+    mkdirSync(CAPTURE_DIR, { recursive: true });
+    const safeName = testInfo.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    writeFileSync(
+      path.join(CAPTURE_DIR, `${safeName}.capture.json`),
+      JSON.stringify(telemetryTest.getCapture(), null, 2)
+    );
   });
 
   test("trial member views their plan and converts to paid", async ({ page }) => {

@@ -25,7 +25,12 @@ function send(event: string, properties: Record<string, unknown> = {}) {
     properties,
   });
   const url = "/api/track";
-  if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+  // Test-only transport override: Playwright/Chromium doesn't reliably expose sendBeacon's
+  // body to request interception (confirmed against TelemetryTest AI's collector, which
+  // documents this exact sendBeacon gap) so E2E runs set this to force fetch, which IS
+  // interceptable. Default (unset) behavior — real users, `npm run dev`/prod — is unchanged.
+  const forceFetch = process.env.NEXT_PUBLIC_TELEMETRYTEST_FORCE_FETCH === "1";
+  if (!forceFetch && typeof navigator !== "undefined" && navigator.sendBeacon) {
     const blob = new Blob([body], { type: "application/json" });
     const sent = navigator.sendBeacon(url, blob);
     if (sent) return;

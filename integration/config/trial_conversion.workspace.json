@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "workspace_config_v1",
+  "workspaceId": "trailhead",
+  "productVersion": "0.1.0",
+  "environment": "ci",
+  "journey": {
+    "schemaVersion": "journey_config_v1",
+    "journeyId": "trial_conversion",
+    "displayName": "Trial to Subscription Conversion",
+    "businessOwner": "Trailhead Product",
+    "qaOwner": "Trailhead Engineering",
+    "analyticsOwner": "Trailhead Growth Analytics",
+    "ciSystem": "github_actions",
+    "framework": "playwright",
+    "ruleSource": "integration/contracts/trial_conversion.contract.json",
+    "mode": "observe",
+    "knownUnknowns": []
+  }
+}

@@ -1,9 +1,24 @@
-import { test, expect } from "@playwright/test";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { test, expect } from "./telemetrytest-fixture";
 import { resetAppState, signUp, completeOnboarding, uniqueEmail } from "./helpers";
 
+const CAPTURE_DIR = path.join("telemetrytest-out", "signup_onboarding");
+
 test.describe("J1 — Signup & onboarding", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, telemetryTest }) => {
     await resetAppState(page);
+    await telemetryTest.startJourney("signup_onboarding");
+  });
+
+  test.afterEach(async ({ telemetryTest }, testInfo) => {
+    await telemetryTest.endJourney();
+    mkdirSync(CAPTURE_DIR, { recursive: true });
+    const safeName = testInfo.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    writeFileSync(
+      path.join(CAPTURE_DIR, `${safeName}.capture.json`),
+      JSON.stringify(telemetryTest.getCapture(), null, 2)
+    );
   });
 
   test("creates an account and previews a personalized plan", async ({ page }) => {

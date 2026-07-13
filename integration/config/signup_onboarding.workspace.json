@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "workspace_config_v1",
+  "workspaceId": "trailhead",
+  "productVersion": "0.1.0",
+  "environment": "ci",
+  "journey": {
+    "schemaVersion": "journey_config_v1",
+    "journeyId": "signup_onboarding",
+    "displayName": "Signup & Onboarding",
+    "businessOwner": "Trailhead Product",
+    "qaOwner": "Trailhead Engineering",
+    "analyticsOwner": "Trailhead Growth Analytics",
+    "ciSystem": "github_actions",
+    "framework": "playwright",
+    "ruleSource": "integration/contracts/signup_onboarding.contract.json",
+    "mode": "observe",
+    "knownUnknowns": []
+  }
+}

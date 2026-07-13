@@ -1,4 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { test, expect } from "./telemetrytest-fixture";
 import { resetAppState, uniqueEmail } from "./helpers";
 
 async function addHeadlampToCart(page: import("@playwright/test").Page) {
@@ -7,9 +9,22 @@ async function addHeadlampToCart(page: import("@playwright/test").Page) {
   await page.goto("/checkout");
 }
 
+const CAPTURE_DIR = path.join("telemetrytest-out", "checkout_payment_retry");
+
 test.describe("J3 — Checkout & payment (with retry)", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, telemetryTest }, testInfo) => {
     await resetAppState(page);
+    await telemetryTest.startJourney("checkout_payment_retry");
+  });
+
+  test.afterEach(async ({ telemetryTest }, testInfo) => {
+    await telemetryTest.endJourney();
+    mkdirSync(CAPTURE_DIR, { recursive: true });
+    const safeName = testInfo.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    writeFileSync(
+      path.join(CAPTURE_DIR, `${safeName}.capture.json`),
+      JSON.stringify(telemetryTest.getCapture(), null, 2)
+    );
   });
 
   test("guest checkout succeeds on the first attempt with a good card", async ({ page }) => {

@@ -1,0 +1,49 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "local-1.0-mrjk9z58-458f5312",
+  "journey_id": "trial_conversion",
+  "snapshot_id": "sha256:11f217999dce294171b5147b33212f74fc2e475565a40b28fb231b4424a7e850",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "advisory",
+    "journey_id": "trial_conversion",
+    "rule_id": "trial_conversion_sequence",
+    "inputs_digest": "evp_93a148423664",
+    "eligibility_digest": "sha256:bc58de825ba03e62410c598a24c158d85b07e1fa7153d7d8ee5bcf9afab51f39",
+    "version_linkage": {
+      "rule_contract_version": "trial_conversion_v1",
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "playwright_collector_0.1"
+    },
+    "run_context": {
+      "run_id": "local-1.0-mrjk9z58-458f5312",
+      "ci_run_id": "local",
+      "workflow_run_attempt": "1",
+      "repository": "local",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": null
+    },
+    "decision_time": "2026-07-13T18:34:08.299Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:11f217999dce294171b5147b33212f74fc2e475565a40b28fb231b4424a7e850",
+    "content_hash": "sha256:11f217999dce294171b5147b33212f74fc2e475565a40b28fb231b4424a7e850",
+    "emitted_at": "2026-07-13T18:34:08.302Z",
+    "signature": {
+      "status": "unsigned_pending",
+      "mode": "provenance",
+      "subject": "unconfigured",
+      "issuer": "none",
+      "value": null
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T18:34:08.302Z"
+}

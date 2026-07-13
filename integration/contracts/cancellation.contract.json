@@ -1,0 +1,37 @@
+{
+  "rule_contract_version": "cancellation_v1",
+  "rule_id": "cancellation_sequence",
+  "journey_id": "cancellation",
+  "source": "docs/analytics/tracking-plan.md#j4--cancellation",
+  "owner": "trailhead_growth_analytics",
+  "mode": "observe",
+  "severity": "high",
+  "event_aliases": {
+    "cancellation_started": ["cancellation_started"],
+    "save_offer_shown": ["save_offer_shown"],
+    "save_accepted": ["save_accepted"],
+    "cancellation_completed": ["cancellation_completed"]
+  },
+  "expected_path": [
+    "cancellation_started",
+    "save_offer_shown",
+    "save_accepted",
+    "cancellation_completed"
+  ],
+  "optional_events": ["save_accepted", "cancellation_completed"],
+  "forbidden_events": [
+    { "event": "order_completed", "severity": "high" },
+    { "event": "trial_converted", "severity": "high" }
+  ],
+  "property_consistency": [],
+  "required_properties": {
+    "cancellation_started": { "plan": "string", "subscriptionStatus": "string" },
+    "save_offer_shown": { "plan": "string" },
+    "save_accepted": { "saveType": "string" },
+    "cancellation_completed": { "plan": "string", "canceledAt": "string" }
+  },
+  "known_unknowns": [],
+  "approved_by": "trailhead_growth_analytics_owner",
+  "approved_at": "2026-07-13T18:00:00Z",
+  "approved_for_version": "cancellation_v1"
+}

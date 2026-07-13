@@ -46,3 +46,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# vendored qualiber checkout for local dev (CI checks it out fresh at a pinned SHA)
+/.qualiber-vendor/
+
+# TelemetryTest AI local run output (captures/artifacts are regenerated per run;
+# integration/artifacts/ keeps curated evidence, this is scratch)
+/telemetrytest-out/

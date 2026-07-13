@@ -1,5 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { test, expect } from "./telemetrytest-fixture";
 import { resetAppState, signUp, completeOnboarding, uniqueEmail } from "./helpers";
+
+const CAPTURE_DIR = path.join("telemetrytest-out", "cancellation");
 
 async function becomeActiveMember(
   page: import("@playwright/test").Page,
@@ -15,12 +19,30 @@ async function becomeActiveMember(
 }
 
 test.describe("J4 — Cancellation", () => {
+  // startJourney is called inside each test body (after becomeActiveMember setup), not here --
+  // that setup performs a real J2 upgrade, and a describe-level beforeEach would sweep its
+  // trial_converted event into the cancellation capture, tripping the contract's forbidden_events
+  // check on telemetry that isn't actually part of this journey (see FRICTION-LOG.md Step 4).
   test.beforeEach(async ({ page }) => {
     await resetAppState(page);
   });
 
-  test("member can pause instead of cancelling, and account stays active", async ({ page }) => {
+  test.afterEach(async ({ telemetryTest }, testInfo) => {
+    await telemetryTest.endJourney();
+    mkdirSync(CAPTURE_DIR, { recursive: true });
+    const safeName = testInfo.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    writeFileSync(
+      path.join(CAPTURE_DIR, `${safeName}.capture.json`),
+      JSON.stringify(telemetryTest.getCapture(), null, 2)
+    );
+  });
+
+  test("member can pause instead of cancelling, and account stays active", async ({
+    page,
+    telemetryTest,
+  }) => {
     await becomeActiveMember(page, "summit");
+    await telemetryTest.startJourney("cancellation");
 
     await page.goto("/account/subscription");
     await page.getByTestId("start-cancellation").click();
@@ -35,8 +57,9 @@ test.describe("J4 — Cancellation", () => {
     expect(user.canceledAt).toBeNull();
   });
 
-  test("member can downgrade instead of cancelling", async ({ page }) => {
+  test("member can downgrade instead of cancelling", async ({ page, telemetryTest }) => {
     await becomeActiveMember(page, "summit");
+    await telemetryTest.startJourney("cancellation");
 
     await page.goto("/account/subscription");
     await page.getByTestId("start-cancellation").click();
@@ -50,8 +73,9 @@ test.describe("J4 — Cancellation", () => {
     expect(user.canceledAt).toBeNull();
   });
 
-  test("member can decline every save offer and cancel cleanly", async ({ page }) => {
+  test("member can decline every save offer and cancel cleanly", async ({ page, telemetryTest }) => {
     await becomeActiveMember(page, "trail");
+    await telemetryTest.startJourney("cancellation");
 
     await page.goto("/account/subscription");
     await page.getByTestId("start-cancellation").click();
