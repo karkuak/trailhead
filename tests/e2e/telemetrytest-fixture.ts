@@ -38,7 +38,10 @@ const trailheadCollectorConfig = defaultConfig({
 });
 
 export const test = base.extend<Fixtures>({
-  telemetryTest: async ({ page }, use, testInfo) => {
+  // Playwright's fixture lifecycle parameter is conventionally named `use`, which collides with
+  // eslint-plugin-react-hooks' detection of React 19's `use()` hook (it flags any `use(...)` call
+  // inside a function not itself named `use*`). Renamed to sidestep the false positive.
+  telemetryTest: async ({ page }, provideFixture, testInfo) => {
     const acc = new CaptureAccumulator({
       config: trailheadCollectorConfig,
       browserContextId: `ctx_${testInfo.workerIndex}`,
@@ -71,7 +74,7 @@ export const test = base.extend<Fixtures>({
       },
     };
 
-    await use(handle);
+    await provideFixture(handle);
   },
 });
 

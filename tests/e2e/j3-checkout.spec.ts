@@ -17,7 +17,7 @@ const CAPTURE_DIR = path.join(
 );
 
 test.describe("J3 — Checkout & payment (with retry)", () => {
-  test.beforeEach(async ({ page, telemetryTest }, testInfo) => {
+  test.beforeEach(async ({ page, telemetryTest }) => {
     // Must happen before the very first request (including resetAppState's), since proxy.ts
     // only ever sets th_sid when it's absent.
     await forceExperimentSessionFromEnv(page);

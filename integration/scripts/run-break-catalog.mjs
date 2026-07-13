@@ -3,7 +3,6 @@
 // then runs the real CLI validate against it. The assertion is on the tool's output (see
 // integration/BREAK-RESULTS.md), not on the app.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { execSync } from "node:child_process";
 import path from "node:path";
 
 const OUT_ROOT = "integration/artifacts/break-catalog";
