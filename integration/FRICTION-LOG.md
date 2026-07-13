@@ -5,7 +5,12 @@ progress / required a workaround or guess), **Med** (cost real time, workaround 
 found), **Low** (cosmetic / minor doc gap).
 
 **Start time:** 2026-07-13T18:13Z
-**Time-to-first-green:** TBD (filled in once the first validated run appears in CI)
+**Time-to-first-green (all CI checks passing on the real PR):** 2026-07-13T20:09Z — **~1h56m.**
+(The `TelemetryTest AI (PR)` job specifically first went green earlier, at 19:57Z / ~1h44m — see
+Step 6 — but the *whole PR*, including the pre-existing `CI` workflow that this integration's own
+changes broke and re-fixed twice, wasn't green until 20:09Z. Both numbers are reported since
+"first green" is ambiguous once you're touching a repo's existing CI as well as adding new
+workflows.)
 
 ---
 
@@ -404,3 +409,52 @@ and the ticket records that back. `integration/scripts/jira-loop.mjs` (Step earl
 this same create/update/reference pattern from CI; this was done directly via the MCP because CI
 can't yet authenticate to Jira (no `JIRA_API_TOKEN` secret provisioned — same "I can't mint
 credentials on your behalf" constraint as the qualiber PAT).
+
+## Step 10 — Getting the real PR fully green (PAT, then two self-inflicted regressions)
+
+**2026-07-13T19:50Z** — User created the fine-grained PAT (`trailhead-ci-qualiber-readonly`,
+Contents:Read-only on `qualiber` only) after a first attempt came back "Write access to repository
+not granted" (the Contents permission hadn't been checked at all — GitHub's picker defaults to no
+repository permissions selected). Second token worked immediately (`git ls-remote` succeeded).
+Stored as `QUALIBER_PAT`; wired into both workflows' qualiber checkout steps.
+
+**2026-07-13T19:52Z–19:57Z** — Re-ran. `TelemetryTest AI (PR)` got past checkout but then failed
+the E2E build: `Cannot find module '../../.qualiber-vendor/...'`. Cause: I'd checked qualiber out
+to a sibling `qualiber/` directory in CI, but the fixture's import path assumes the same layout as
+local dev (`trailhead/.qualiber-vendor/`). Fixed by changing the checkout `path:` to
+`trailhead/.qualiber-vendor` instead of branching the fixture's imports by environment — one
+consistent layout everywhere. **19:57Z: `TelemetryTest AI (PR)` went green** — first fully green
+run of the new workflow, with real artifacts (56 files), all five validate steps correctly
+reporting `Advisory comment eligible: No (insufficient_observe_runs, ...)` for this genuinely
+first-ever run (matching every earlier local finding), and the Jira step gracefully no-op'ing
+(no credentials configured, warned, exit 0) exactly as designed.
+
+**2026-07-13T19:57Z** — But the *pre-existing* `ci.yml` (Trailhead's original CI, not part of this
+integration's own new workflows) now failed for real: `next build`'s repo-wide TypeScript check
+picked up `tests/e2e/telemetrytest-fixture.ts` and failed on the same missing-module error,
+because `ci.yml`'s plain build/lint/unit job has no reason to check out qualiber at all. **This is
+a genuine regression this integration introduced** — wiring the collector fixture into the
+existing J1–J4 specs (as instructed) means *every* CI job that type-checks or runs those specs now
+has a transitive dependency on the vendored tool. Fixed in two parts: (1) excluded `tests/**/*` and
+`.qualiber-vendor/**/*` from `tsconfig.json` so `next build` stops type-checking test files (it
+never needed to — Playwright transpiles its own specs independently); this also surfaced two real
+lint issues (`.qualiber-vendor` was being linted as first-party code — added to `eslintignore`;
+and `eslint-plugin-react-hooks` false-positived on Playwright's conventional `use` fixture
+parameter name colliding with its React 19 `use()`-hook detector — renamed to `provideFixture`).
+(2) `ci.yml`'s E2E step still runs the real Playwright suite at runtime (not just typecheck), so
+it needs `.qualiber-vendor` checked out too, with the same `QUALIBER_PAT` — added that step,
+mirroring the new workflows exactly.
+
+**2026-07-13T20:09Z — all four PR checks green**: `Build, lint, unit, e2e` (ci.yml),
+`Deploy PR preview`, and both `telemetrytest (control / reassuring)` matrix legs. This is the real
+end state of the integration, not a claim — verified via `gh pr checks 1`.
+
+**Takeaway on total cost:** the *tool's own* mechanisms (validator, collector, promotion ladder,
+evidence packs, Jira glue) all worked correctly essentially on the first or second real attempt
+once the config was right. Almost all of the elapsed time (start 18:13Z → 20:09Z) went to CI
+plumbing that has nothing to do with TelemetryTest AI's actual logic: GitHub's cross-repo private
+action/checkout limitations (Steps 6, 10) and the ripple effect of adding a new source dependency
+to an existing test suite's typecheck/lint/CI surface (Step 10). For a team adopting this tool
+where the source were public/published normally, essentially all of that time would disappear —
+which makes the unpublished-repo status (a deliberate, documented choice per the patent-disclosure
+invariant) the single largest real-world adoption cost this integration surfaced.
