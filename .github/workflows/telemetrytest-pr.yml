@@ -52,11 +52,15 @@ jobs:
       # Requires a QUALIBER_PAT repo secret (fine-grained PAT, Contents:Read-only on
       # karkuak/qualiber only) -- the default GITHUB_TOKEN cannot access a different repo, even a
       # private one under the same account. See integration/FRICTION-LOG.md "Step 6".
+      #
+      # Checked out to trailhead/.qualiber-vendor (not a sibling dir) so it lands at the exact
+      # path tests/e2e/telemetrytest-fixture.ts imports from in local dev -- same layout, same
+      # relative imports, no CI-only path branching.
       - uses: actions/checkout@v4
         with:
           repository: karkuak/qualiber
           ref: ${{ env.QUALIBER_REF }}
-          path: qualiber
+          path: trailhead/.qualiber-vendor
           token: ${{ secrets.QUALIBER_PAT }}
 
       - uses: actions/setup-node@v4
@@ -69,7 +73,7 @@ jobs:
 
       - name: Install qualiber deps (source CLI — not published to any registry, see
           integration/FRICTION-LOG.md)
-        working-directory: qualiber
+        working-directory: trailhead/.qualiber-vendor
         run: npm ci
 
       - name: Install Playwright browsers
@@ -96,7 +100,7 @@ jobs:
           INPUT_STATE-MODE: artifact
           INPUT_ELIGIBILITY-MODE: shard
           INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node ../qualiber/action/dist/index.js
+        run: node .qualiber-vendor/action/dist/index.js
 
       - name: TelemetryTest AI — validate checkout_payment_retry (recovered success)
         working-directory: trailhead
@@ -110,7 +114,7 @@ jobs:
           INPUT_STATE-MODE: artifact
           INPUT_ELIGIBILITY-MODE: shard
           INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node ../qualiber/action/dist/index.js
+        run: node .qualiber-vendor/action/dist/index.js
 
       # Only one matrix leg needs to validate the variant-independent journeys.
       - name: TelemetryTest AI — validate signup_onboarding
@@ -125,7 +129,7 @@ jobs:
           INPUT_STATE-MODE: artifact
           INPUT_ELIGIBILITY-MODE: shard
           INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node ../qualiber/action/dist/index.js
+        run: node .qualiber-vendor/action/dist/index.js
 
       - name: TelemetryTest AI — validate trial_conversion
         if: matrix.variant.label == 'control'
@@ -139,7 +143,7 @@ jobs:
           INPUT_STATE-MODE: artifact
           INPUT_ELIGIBILITY-MODE: shard
           INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node ../qualiber/action/dist/index.js
+        run: node .qualiber-vendor/action/dist/index.js
 
       - name: TelemetryTest AI — validate cancellation (pause / downgrade / full cancel)
         if: matrix.variant.label == 'control'
@@ -149,7 +153,7 @@ jobs:
             "member-can-downgrade-instead-of-cancelling:downgrade" \
             "member-can-decline-every-save-offer-and-cancel-cleanly:fullcancel"; do
             CAPTURE_NAME="${LEG%%:*}"; OUT_NAME="${LEG##*:}"
-            npx tsx ../qualiber/src/cli.ts validate \
+            npx tsx .qualiber-vendor/src/cli.ts validate \
               --capture "telemetrytest-out/cancellation/${CAPTURE_NAME}.capture.json" \
               --contract integration/contracts/cancellation.contract.json \
               --config integration/config/cancellation.workspace.json \
