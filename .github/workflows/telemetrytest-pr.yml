@@ -1,0 +1,158 @@
+# TelemetryTest AI — PR runs. Modeled on karkuak/qualiber's
+# examples/workflows/customer-example-pr.yml (LLD §7 topology): PR runs read canonical state
+# read-only and upload their eligibility + decision-snapshot shards as artifacts; the
+# default-branch workflow (telemetrytest-default.yml) merges them after the PR lands.
+#
+# Matrixed over the checkout_button_copy experiment variant (product strategy §8: a variant must
+# emit the *same* journey events as control) — E2E_FORCE_SESSION_ID pins the th_sid cookie to a
+# session id known to hash to each bucket (see tests/e2e/helpers.ts), so both legs produce a real
+# capture without any app code changes. TT_MATRIX_CONTEXT disambiguates the run id per the tool's
+# own matrix-safety contract (B7).
+name: TelemetryTest AI (PR)
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: "tt-pr-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  QUALIBER_REF: efe364d6d2e03ae531619f3b0e8319e532e8c0a3
+
+jobs:
+  telemetrytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - { label: control, session_id: ci-session-3 }
+          - { label: reassuring, session_id: ci-session-0 }
+    permissions:
+      contents: read # PR runs never write canonical state
+      pull-requests: write # advisory PR comment
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: trailhead
+
+      - uses: actions/checkout@v4
+        with:
+          repository: karkuak/qualiber
+          ref: ${{ env.QUALIBER_REF }}
+          path: qualiber
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Trailhead deps
+        working-directory: trailhead
+        run: npm ci
+
+      - name: Install qualiber deps (source CLI — not published to any registry, see
+          integration/FRICTION-LOG.md)
+        working-directory: qualiber
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: trailhead
+        run: npx playwright install --with-deps chromium
+
+      - name: Run J1-J4 E2E (produces captures)
+        working-directory: trailhead
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          E2E_FORCE_SESSION_ID: ${{ matrix.variant.session_id }}
+          E2E_VARIANT_LABEL: ${{ matrix.variant.label }}
+        run: npx playwright test tests/e2e/
+
+      - name: TelemetryTest AI — validate checkout_payment_retry (clean success)
+        uses: karkuak/qualiber@v1
+        env:
+          TT_MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        with:
+          capture: "trailhead/telemetrytest-out/checkout_payment_retry-${{ matrix.variant.label }}/guest-checkout-succeeds-on-the-first-attempt-with-a-good-card.capture.json"
+          contract: trailhead/integration/contracts/checkout_payment_retry.contract.json
+          config: trailhead/integration/config/checkout_payment_retry.workspace.json
+          mode: advisory
+          out: "trailhead/telemetrytest-out/tt-results/checkout-clean-${{ matrix.variant.label }}"
+          state-mode: artifact
+          eligibility-mode: shard
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TelemetryTest AI — validate checkout_payment_retry (recovered success)
+        uses: karkuak/qualiber@v1
+        env:
+          TT_MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        with:
+          capture: "trailhead/telemetrytest-out/checkout_payment_retry-${{ matrix.variant.label }}/a-declined-first-attempt-recovers-cleanly-on-retry-and-is-tracked-as-recovered.capture.json"
+          contract: trailhead/integration/contracts/checkout_payment_retry.contract.json
+          config: trailhead/integration/config/checkout_payment_retry.workspace.json
+          mode: advisory
+          out: "trailhead/telemetrytest-out/tt-results/checkout-recovered-${{ matrix.variant.label }}"
+          state-mode: artifact
+          eligibility-mode: shard
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Only one matrix leg needs to validate the variant-independent journeys.
+      - name: TelemetryTest AI — validate signup_onboarding
+        if: matrix.variant.label == 'control'
+        uses: karkuak/qualiber@v1
+        with:
+          capture: "trailhead/telemetrytest-out/signup_onboarding/creates-an-account-and-previews-a-personalized-plan.capture.json"
+          contract: trailhead/integration/contracts/signup_onboarding.contract.json
+          config: trailhead/integration/config/signup_onboarding.workspace.json
+          mode: advisory
+          out: trailhead/telemetrytest-out/tt-results/signup
+          state-mode: artifact
+          eligibility-mode: shard
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TelemetryTest AI — validate trial_conversion
+        if: matrix.variant.label == 'control'
+        uses: karkuak/qualiber@v1
+        with:
+          capture: "trailhead/telemetrytest-out/trial_conversion/trial-member-views-their-plan-and-converts-to-paid.capture.json"
+          contract: trailhead/integration/contracts/trial_conversion.contract.json
+          config: trailhead/integration/config/trial_conversion.workspace.json
+          mode: advisory
+          out: trailhead/telemetrytest-out/tt-results/conversion
+          state-mode: artifact
+          eligibility-mode: shard
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TelemetryTest AI — validate cancellation (pause / downgrade / full cancel)
+        if: matrix.variant.label == 'control'
+        run: |
+          for LEG in \
+            "member-can-pause-instead-of-cancelling-and-account-stays-active:pause" \
+            "member-can-downgrade-instead-of-cancelling:downgrade" \
+            "member-can-decline-every-save-offer-and-cancel-cleanly:fullcancel"; do
+            CAPTURE_NAME="${LEG%%:*}"; OUT_NAME="${LEG##*:}"
+            npx tsx ../qualiber/src/cli.ts validate \
+              --capture "telemetrytest-out/cancellation/${CAPTURE_NAME}.capture.json" \
+              --contract integration/contracts/cancellation.contract.json \
+              --config integration/config/cancellation.workspace.json \
+              --mode advisory --out "telemetrytest-out/tt-results/cancellation-${OUT_NAME}"
+          done
+        working-directory: trailhead
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: "tt-results-${{ matrix.variant.label }}-${{ github.run_id }}"
+          path: |
+            trailhead/telemetrytest-out/tt-results/**
+          retention-days: 14
+
+      - name: File/update Jira findings
+        if: always()
+        working-directory: trailhead
+        env:
+          JIRA_CLOUD_ID: ${{ secrets.JIRA_CLOUD_ID }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: node integration/scripts/jira-loop.mjs telemetrytest-out/tt-results

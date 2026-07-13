@@ -242,3 +242,29 @@ itself drives a different real journey.** Fixed by moving `startJourney("cancell
 `beforeEach` and into each test body, called right after `becomeActiveMember()` returns and before
 the actual cancel/pause/downgrade actions begin — a one-line addition per test, not a rewrite.
 Re-ran: all three J4 captures clean afterward (see below).
+
+## Step 5 — Matrix (checkout_button_copy variant) proven locally before wiring CI
+
+**2026-07-13T18:38Z** — Forced the `checkout_button_copy` bucket without touching any app code:
+computed two `th_sid` session-id strings that hash (via the app's own `assignVariant` —
+`sha256(sessionId:experimentKey) mod 2`) to `control` and `reassuring` respectively
+(`ci-session-3` → control, `ci-session-0` → reassuring — confirmed directly against
+`src/lib/experiments.ts`, not just my own re-implementation of the hash), then pre-seeded that
+cookie via `page.context().addCookies()` in a `beforeEach` **before** the first request (proxy.ts
+only sets `th_sid` when absent). Ran the full J3 suite once per forced session id.
+
+**2026-07-13T18:39Z** — Validated the recovered-checkout capture from both variants against the
+same contract with `TT_MATRIX_CONTEXT` set (as the tool's `examples/workflows/customer-example-pr.yml`
+instructs matrix jobs to do) and `--eligibility-mode shard --state-mode artifact`: both come back
+**clean**, proving the experiment doesn't distort the funnel (identical events, identical
+validation outcome — only the button label differs, exactly per the product strategy's standing
+rule for the lab). Then ran `merge --shards <dir> --state <canonical>` once per variant's shard:
+`applied 1, idempotent 0, local-skipped 0, history 1` then `history 2` — both matrix legs landed
+in canonical `eligibility.json` as two distinct, non-colliding `run_id`s
+(`matrix-demo-1.0.2fdb2bffd184` / `...ee167f33236a`, the hash suffix derived from
+`TT_MATRIX_CONTEXT`). This is real, direct evidence the B7 matrix-safe shard/merge contract works
+as documented — not inferred from reading the LLD.
+
+Bonus: the eligibility record already carries a computed **VQS** (`vqs_score: 90`,
+`vqs_band: "Strong"`) even for a first/only run — confirms the VQS capability is live and
+populated without any extra configuration on my part.
