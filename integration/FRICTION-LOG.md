@@ -268,3 +268,26 @@ as documented — not inferred from reading the LLD.
 Bonus: the eligibility record already carries a computed **VQS** (`vqs_score: 90`,
 `vqs_band: "Strong"`) even for a first/only run — confirms the VQS capability is live and
 populated without any extra configuration on my part.
+
+## Step 6 — First real CI run: `uses: karkuak/qualiber@v1` genuinely does not resolve
+
+**2026-07-13T18:46Z** — [Sev: High, confirmed in a real GitHub Actions run, not a guess]
+Opened https://github.com/karkuak/trailhead/pull/1. Both matrix legs failed at the very first
+step: `##[error]Unable to resolve action 'karkuak/qualiber', not found`. Confirmed
+`karkuak/qualiber` is a genuinely private repo (`gh repo view --json isPrivate` → `true`). GitHub
+Actions' default `GITHUB_TOKEN` cannot resolve a `uses:` reference into a **different** private
+repository — not even one owned by the same account. This is exactly the risk flagged in Step 1
+(the packaged-Action consumption path assumes public/Marketplace distribution that
+`docs/HANDOFF.md` §5 invariant 20 explicitly says isn't happening yet: "The repo stays private:
+no npm/Marketplace/GitHub-Releases publication ... without patent-counsel clearance"). So
+**the one supposedly-turnkey consumption path (`uses: <repo>@v1`) cannot actually be used by any
+consumer outside the qualiber repo itself, today, full stop** — not a config mistake, a structural
+fact given the repo's current visibility.
+
+**Workaround:** `src/action/inputs.ts` reads plain `INPUT_<NAME>` environment variables (GitHub's
+own convention for JS actions, not `@actions/core`-specific magic) — so the packaged action's real
+entry point, `action/dist/index.js`, can be invoked directly with `node` once those env vars are
+set by hand, with zero change to the tool's actual code path (same failure firewall, same advisory
+comment poster, same Check Run poster — this is not a reimplementation, it's calling the exact
+same compiled entry point GitHub would have invoked, just without GitHub's action-resolution step
+in between). Rewriting both workflows to do this.
