@@ -1,0 +1,10 @@
+{
+  "check_run_schema_version": "1.0",
+  "name": "TelemetryTest AI / checkout_payment_retry / checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "rule_id": "checkout_payment_retry_sequence",
+  "conclusion": "success",
+  "title": "Violations reviewed and acknowledged",
+  "summary": "All 1 reviewable finding(s) have a committed, signed acknowledgement. The run exits 0.",
+  "unacknowledged": []
+}

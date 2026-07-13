@@ -1,0 +1,28 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "19-1.0",
+  "journey_id": "checkout_payment_retry",
+  "record": {
+    "run_id": "19-1.0",
+    "ci_run_id": "local",
+    "timestamp": "2026-07-13T19:29:58.431Z",
+    "run_status": "clean",
+    "mode": "advisory",
+    "vqs_score": 75,
+    "vqs_band": "Usable",
+    "collector_health": "healthy",
+    "capture_coverage": 1,
+    "high_medium_ratio": 1,
+    "fp_rate": 0.6666666666666666,
+    "ai_overclaim_count": 0,
+    "time_window_only": false,
+    "evidence_pack_id": "evp_060f2b5adf06",
+    "findings_count": 0,
+    "promotion_relevant": true,
+    "vqs_cold_start": false
+  },
+  "content_hash": "sha256:c130ebc0008b8c29c1297b75cef3803e62be9bc41450ae67f6ca9c0f8147dbdb",
+  "written_at": "2026-07-13T19:29:58.431Z",
+  "source_ref": "local",
+  "promotion_relevant": true
+}

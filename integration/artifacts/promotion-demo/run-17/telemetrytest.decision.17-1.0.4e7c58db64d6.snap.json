@@ -1,0 +1,49 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "17-1.0",
+  "journey_id": "checkout_payment_retry",
+  "snapshot_id": "sha256:4e7c58db64d6438cf1e4e535479013c07aa961c4efba13e606f3e543182e79ed",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "advisory",
+    "journey_id": "checkout_payment_retry",
+    "rule_id": "checkout_payment_retry_sequence",
+    "inputs_digest": "evp_51722475fec8",
+    "eligibility_digest": "sha256:bb3743db5d0975b96a595d5e6b4894ec982bcf6456fd20aba03e1d46b5a465ac",
+    "version_linkage": {
+      "rule_contract_version": "checkout_payment_retry_v1",
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "playwright_collector_0.1"
+    },
+    "run_context": {
+      "run_id": "17-1.0",
+      "ci_run_id": "17",
+      "workflow_run_attempt": "1",
+      "repository": "karkuak/trailhead",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": "https://github.com/karkuak/trailhead/actions/runs/17"
+    },
+    "decision_time": "2026-07-13T19:20:19.676Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:4e7c58db64d6438cf1e4e535479013c07aa961c4efba13e606f3e543182e79ed",
+    "content_hash": "sha256:4e7c58db64d6438cf1e4e535479013c07aa961c4efba13e606f3e543182e79ed",
+    "emitted_at": "2026-07-13T19:20:19.685Z",
+    "signature": {
+      "status": "signed",
+      "mode": "provenance",
+      "subject": "ed25519:trailhead-2026",
+      "issuer": "ed25519",
+      "value": "b6Lhop1hFQDM5//B8urrytZSxQZIxISo4E4gNheMfvOcVO8uL7hZbyHK8fPzFBSbi3+Rj2zALN+VWhigg9eVAQ=="
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:20:19.686Z"
+}

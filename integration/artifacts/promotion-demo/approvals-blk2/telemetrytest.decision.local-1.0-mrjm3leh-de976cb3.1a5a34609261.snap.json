@@ -1,0 +1,51 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "local-1.0-mrjm3leh-de976cb3",
+  "journey_id": "checkout_payment_retry",
+  "snapshot_id": "sha256:1a5a346092610529f495e46bd31978bc52e375955fa9e4f7efd03f9c79b73a5d",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "promotion",
+    "journey_id": "checkout_payment_retry",
+    "rule_id": "checkout_payment_retry_sequence",
+    "inputs_digest": "sha256:d2fd600665d4b9c4d2da028fc432ad5f658dcb2916d62904470f9a2ac198e1ca",
+    "eligibility_digest": "approval",
+    "version_linkage": {
+      "rule_contract_version": null,
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "cli"
+    },
+    "run_context": {
+      "run_id": "local-1.0-mrjm3leh-de976cb3",
+      "ci_run_id": "local",
+      "workflow_run_attempt": "1",
+      "repository": "local",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": null
+    },
+    "decision_time": "2026-07-13T19:25:09.786Z",
+    "approvals": [
+      "qa_owner:qa@trailhead"
+    ],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:1a5a346092610529f495e46bd31978bc52e375955fa9e4f7efd03f9c79b73a5d",
+    "content_hash": "sha256:1a5a346092610529f495e46bd31978bc52e375955fa9e4f7efd03f9c79b73a5d",
+    "emitted_at": "2026-07-13T19:25:09.786Z",
+    "signature": {
+      "status": "signed",
+      "mode": "provenance+approval",
+      "subject": "ed25519:trailhead-2026",
+      "issuer": "ed25519",
+      "value": "k87W2n1PRKWr3UR4vE6pULJVo8MOG83aTtSvlJpZVo9uosx6zqgshVeTZdt+rzx5010EcRBG2ewNucvuKtWMAA=="
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:25:09.787Z"
+}

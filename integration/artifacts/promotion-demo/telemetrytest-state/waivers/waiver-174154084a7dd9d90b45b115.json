@@ -1,0 +1,41 @@
+{
+  "waiver_schema_version": "1.0",
+  "journey_id": "checkout_payment_retry",
+  "rule_id": "checkout_payment_retry_sequence",
+  "scope": {
+    "kind": "rule"
+  },
+  "approvers": [
+    {
+      "role": "qa_owner",
+      "approved_by": "qa@trailhead",
+      "approved_at": "2026-07-13T19:28:54.183Z",
+      "snapshot_id": ""
+    },
+    {
+      "role": "analytics_owner",
+      "approved_by": "analytics@trailhead",
+      "approved_at": "2026-07-13T19:28:54.183Z",
+      "snapshot_id": ""
+    },
+    {
+      "role": "engineering_owner",
+      "approved_by": "eng@trailhead",
+      "approved_at": "2026-07-13T19:28:54.183Z",
+      "snapshot_id": ""
+    }
+  ],
+  "created_at": "2026-07-13T19:28:54.183Z",
+  "expires_at": "2026-07-20T19:28:52.875Z",
+  "linked_ticket": "TRAIH-1",
+  "residual_risk": "known false-positive by design; tracked in TRAIH-1",
+  "reason": "permanent-decline test intentionally never fires order_completed",
+  "waiver_id": "waiver:174154084a7dd9d90b45b115",
+  "signature": {
+    "status": "signed",
+    "mode": "provenance+approval",
+    "subject": "ed25519:trailhead-2026",
+    "issuer": "ed25519",
+    "value": "WOPKPzRWKiZMN3o3bLhOXSXct/nKxtHHdP6BWzKZqJ2Mlhy9gw46eMsnpWrNhD3iKtlYhNDWcLrVXlUFneZmCg=="
+  }
+}

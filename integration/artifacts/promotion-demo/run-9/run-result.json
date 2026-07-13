@@ -1,0 +1,8 @@
+{
+  "runStatus": "clean",
+  "ciExitCode": 0,
+  "blocking": false,
+  "advisoryCommentEligible": true,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "No telemetry rule violations detected (advisory; CI not affected)."
+}

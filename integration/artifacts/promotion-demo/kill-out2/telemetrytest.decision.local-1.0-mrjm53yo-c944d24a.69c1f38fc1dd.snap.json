@@ -1,0 +1,52 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "local-1.0-mrjm53yo-c944d24a",
+  "journey_id": "global",
+  "snapshot_id": "sha256:69c1f38fc1dd93da9aa4943e6e78d06a472ebc3ebde1bfb57e53c1aadee54265",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "demotion",
+    "journey_id": "global",
+    "rule_id": "kill-switch",
+    "inputs_digest": "sha256:c6c8b2f2cef70b635f72842bb6622d5f718a8c13ae1f257d55f139d7721f63ae",
+    "eligibility_digest": "none",
+    "version_linkage": {
+      "rule_contract_version": null,
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "cli"
+    },
+    "run_context": {
+      "run_id": "local-1.0-mrjm53yo-c944d24a",
+      "ci_run_id": "local",
+      "workflow_run_attempt": "1",
+      "repository": "local",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": null
+    },
+    "decision_time": "2026-07-13T19:26:20.496Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:69c1f38fc1dd93da9aa4943e6e78d06a472ebc3ebde1bfb57e53c1aadee54265",
+    "content_hash": "sha256:69c1f38fc1dd93da9aa4943e6e78d06a472ebc3ebde1bfb57e53c1aadee54265",
+    "emitted_at": "2026-07-13T19:26:20.496Z",
+    "signature": {
+      "status": "signed",
+      "mode": "provenance",
+      "subject": "ed25519:trailhead-2026",
+      "issuer": "ed25519",
+      "value": "kLXfWK+/azSKPvdqquJJ5FXuL8QtdzSzRoRwp31+0Txsa9uhvnteqnJIEwzxkOfS0dY08fzKEwMA+H9qZuLYAg=="
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:26:20.497Z",
+  "demotion_triggers": [
+    "kill switch engaged: drill: prove instant disable"
+  ]
+}

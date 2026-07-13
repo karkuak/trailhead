@@ -1,0 +1,8 @@
+::notice::TelemetryTest AI: matrix jobs must set TT_MATRIX_CONTEXT (from toJSON(matrix)) or TT_SHARD_INDEX so run ids stay unique.
+::warning::TelemetryTest AI: kill switch engaged (drill: prove instant disable) — all rule authority suppressed this run (advisory behavior, exit 0).
+Review-required check: TelemetryTest AI / checkout_payment_retry / checkout_payment_retry_sequence → neutral
+TelemetryTest AI: blocking suppressed for rule 'checkout_payment_retry_sequence': kill switch engaged (drill: prove instant disable) — all blocking disabled
+TelemetryTest AI — rule_violation_detected
+Deterministic telemetry rule violation detected (advisory; CI not affected). (blocking suppressed: kill switch engaged (drill: prove instant disable) — all blocking disabled)
+Mode: advisory | CI blocking: No
+Advisory comment eligible: Yes

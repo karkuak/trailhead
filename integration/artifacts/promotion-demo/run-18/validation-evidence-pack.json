@@ -1,0 +1,105 @@
+{
+  "evidence_pack_schema_version": "1.0",
+  "product_context": {
+    "product": "TelemetryTest AI",
+    "phase": "Phase 1",
+    "mode": "advisory",
+    "environment": "ci"
+  },
+  "rule_context": {
+    "rule_id": "checkout_payment_retry_sequence",
+    "rule_source": "docs/analytics/tracking-plan.md#j3-checkout--payment-with-retry",
+    "rule_contract_version": "checkout_payment_retry_v1",
+    "severity": "high",
+    "policy": "non_blocking",
+    "owner": "trailhead_growth_analytics"
+  },
+  "journey_context": {
+    "journey_id": "checkout_payment_retry",
+    "display_name": null,
+    "known_unknowns": [
+      "experiment_viewed",
+      "page_viewed",
+      "product_added_to_cart"
+    ]
+  },
+  "test_context": {
+    "test_id": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a permanently invalid card fails without ever completing the order",
+    "test_file": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a permanently invalid card fails without ever completing the order",
+    "test_title": "",
+    "test_run_id": "run_0_0",
+    "ci_run_id": "local",
+    "pull_request_id": null,
+    "framework": "Playwright",
+    "browser": "chromium"
+  },
+  "collector_context": {
+    "collector_version": "playwright_collector_0.1",
+    "collector_health": "healthy",
+    "capture_coverage": 1,
+    "drop_rate": 0,
+    "background_event_ratio": 0
+  },
+  "association_context": {
+    "distribution": {
+      "high": 6,
+      "medium": 0,
+      "low": 0,
+      "unknown": 0
+    },
+    "late_event_count": 0,
+    "orphan_event_count": 0,
+    "unknown_event_count": 0
+  },
+  "validation_context": {
+    "validator_version": "validator_0.2",
+    "validation_status": "rule_violation_detected",
+    "failure_type": "missing_required_event",
+    "expected_sequence": [
+      "checkout_started",
+      "payment_submitted",
+      "payment_failed",
+      "payment_retried",
+      "order_completed"
+    ],
+    "actual_sequence": [
+      "checkout_started",
+      "payment_submitted",
+      "payment_failed"
+    ],
+    "missing_event": "order_completed",
+    "validator_quality_score": 90,
+    "validator_quality_band": "Strong",
+    "vqs_cold_start": true
+  },
+  "payload_summary": {
+    "included_fields": [
+      "attemptNumber",
+      "experiment",
+      "itemCount",
+      "orderId",
+      "page",
+      "priceCents",
+      "productId",
+      "reason",
+      "totalCents",
+      "variant"
+    ],
+    "redacted_fields": [
+      "cardLast4"
+    ],
+    "raw_payload_included": false
+  },
+  "ai_context": {
+    "ai_explanation_used": false,
+    "prompt_version": null,
+    "model_decision_authority": "none"
+  },
+  "human_feedback": {
+    "status": "pending",
+    "feedback_ids": []
+  },
+  "content_hash": "sha256:51722475fec889e69d359c2853a70b79302d9242bcb88e8d84d34a884a84ae58",
+  "evidence_pack_id": "evp_51722475fec8",
+  "created_at": "2026-07-13T19:27:27.044Z"
+}

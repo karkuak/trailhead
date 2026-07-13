@@ -1,0 +1,52 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "19-1.0",
+  "journey_id": "checkout_payment_retry",
+  "snapshot_id": "sha256:16e0bc215ccb31aa6b2119953e63b568b80602e8850c64af225af317d748755f",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "demotion",
+    "journey_id": "checkout_payment_retry",
+    "rule_id": "checkout_payment_retry_sequence",
+    "inputs_digest": "sha256:0560d554aa60da3dfd378ad825a79e2be5df4c2c0f147467a98b08629c9fc311",
+    "eligibility_digest": "sha256:a245d56190d9695fbc1c393a7578fc3626e64a1df44ef5dfded1a4cfd1a2dcf7",
+    "version_linkage": {
+      "rule_contract_version": "checkout_payment_retry_v1",
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "playwright_collector_0.1"
+    },
+    "run_context": {
+      "run_id": "19-1.0",
+      "ci_run_id": "19",
+      "workflow_run_attempt": "1",
+      "repository": "karkuak/trailhead",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": "https://github.com/karkuak/trailhead/actions/runs/19"
+    },
+    "decision_time": "2026-07-13T19:29:58.424Z",
+    "approvals": [],
+    "waiver_ref": null,
+    "target_mode": null,
+    "snapshot_id": "sha256:16e0bc215ccb31aa6b2119953e63b568b80602e8850c64af225af317d748755f",
+    "content_hash": "sha256:16e0bc215ccb31aa6b2119953e63b568b80602e8850c64af225af317d748755f",
+    "emitted_at": "2026-07-13T19:29:58.440Z",
+    "signature": {
+      "status": "unsigned_pending",
+      "mode": "provenance",
+      "subject": "unconfigured",
+      "issuer": "none",
+      "value": null
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:29:58.440Z",
+  "demotion_triggers": [
+    "rollback trigger: false-positive rate spiked (0.67 > 0.1)"
+  ]
+}
