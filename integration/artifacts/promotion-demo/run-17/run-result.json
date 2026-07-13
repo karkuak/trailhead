@@ -1,0 +1,17 @@
+{
+  "runStatus": "rule_violation_detected",
+  "ciExitCode": 20,
+  "blocking": true,
+  "advisoryCommentEligible": true,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "Deterministic telemetry rule violation on a blocking-promoted rule — this run exits non-zero by explicit, earned, human-approved policy (ADR-002). A signed block snapshot records the decision.",
+  "blockDecision": {
+    "kill_switch_clear": true,
+    "customer_enabled": true,
+    "rule_in_blocking_state": true,
+    "high_confidence_deterministic_violation": true,
+    "evidence_trustworthy": true,
+    "no_valid_waiver": true
+  },
+  "blockReasons": []
+}

@@ -1,0 +1,8 @@
+{
+  "runStatus": "rule_violation_detected",
+  "ciExitCode": 0,
+  "blocking": false,
+  "advisoryCommentEligible": false,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "Deterministic telemetry rule violation detected (advisory; CI not affected)."
+}

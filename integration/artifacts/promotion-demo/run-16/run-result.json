@@ -1,0 +1,19 @@
+{
+  "runStatus": "rule_violation_detected",
+  "ciExitCode": 0,
+  "blocking": false,
+  "advisoryCommentEligible": true,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "Deterministic telemetry rule violation detected (advisory; CI not affected). (blocking suppressed: kill switch engaged (drill: prove instant disable) — all blocking disabled)",
+  "blockDecision": {
+    "kill_switch_clear": false,
+    "customer_enabled": true,
+    "rule_in_blocking_state": true,
+    "high_confidence_deterministic_violation": true,
+    "evidence_trustworthy": true,
+    "no_valid_waiver": true
+  },
+  "blockReasons": [
+    "kill switch engaged (drill: prove instant disable) — all blocking disabled"
+  ]
+}

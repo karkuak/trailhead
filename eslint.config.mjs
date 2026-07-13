@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored external repo (see integration/FRICTION-LOG.md) -- not our code.
+    ".qualiber-vendor/**",
   ]),
 ]);
 

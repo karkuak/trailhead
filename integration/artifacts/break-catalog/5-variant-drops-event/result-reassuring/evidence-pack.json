@@ -1,0 +1,30 @@
+{
+  "schema_version": "evidence_pack_v0.1",
+  "rule_id": "checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "test_id": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+  "ci_run_id": "local",
+  "mode": "observe",
+  "validation_status": "pass",
+  "ci_blocking": false,
+  "collector_health": "healthy",
+  "findings": [],
+  "observed": {
+    "modeled": [
+      "checkout_started",
+      "payment_submitted",
+      "order_completed"
+    ],
+    "knownUnknown": [
+      "page_viewed",
+      "product_added_to_cart"
+    ],
+    "unmodeled": []
+  },
+  "excluded_candidates": {
+    "background": [],
+    "orphaned": [],
+    "late": [],
+    "unknown": []
+  }
+}

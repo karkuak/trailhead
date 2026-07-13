@@ -1,0 +1,53 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "local-1.0-mrjm497z-0729742f",
+  "journey_id": "checkout_payment_retry",
+  "snapshot_id": "sha256:2f1fd9660fc2cc2b683a79476277588523b0541fbde5842a3250006a8a4fbebc",
+  "snapshot": {
+    "snapshot_schema_version": "1.1",
+    "decision_type": "promotion",
+    "journey_id": "checkout_payment_retry",
+    "rule_id": "checkout_payment_retry_sequence",
+    "inputs_digest": "sha256:196c575b8be0603d3c89610348ee61422c0e3a8f03b59704f6537bfa5f644899",
+    "eligibility_digest": "sha256:7352c53ee267b3d371f7a838b68ce7a596c4875ded05bb9ea04d79702f2b06f9",
+    "version_linkage": {
+      "rule_contract_version": null,
+      "action_version": "dev",
+      "validator_version": "validator_0.2",
+      "collector_version": "cli"
+    },
+    "run_context": {
+      "run_id": "local-1.0-mrjm497z-0729742f",
+      "ci_run_id": "local",
+      "workflow_run_attempt": "1",
+      "repository": "local",
+      "ref": "local",
+      "branch": "local",
+      "commit_sha": "local",
+      "pr_number": null,
+      "matrix_job": null,
+      "actor": null,
+      "action_run_url": null
+    },
+    "decision_time": "2026-07-13T19:25:40.656Z",
+    "approvals": [
+      "sha256:1a5a346092610529f495e46bd31978bc52e375955fa9e4f7efd03f9c79b73a5d",
+      "sha256:cd8f9d7d9d667fed3575d2e64bf930c0e265c69380df41485948d1c1216f20b6",
+      "sha256:69d0a6462e5b72c126368c06de2eff265ebf198888bb273e743f3e1519d6dcbd"
+    ],
+    "waiver_ref": null,
+    "target_mode": "blocking",
+    "snapshot_id": "sha256:2f1fd9660fc2cc2b683a79476277588523b0541fbde5842a3250006a8a4fbebc",
+    "content_hash": "sha256:2f1fd9660fc2cc2b683a79476277588523b0541fbde5842a3250006a8a4fbebc",
+    "emitted_at": "2026-07-13T19:25:40.656Z",
+    "signature": {
+      "status": "signed",
+      "mode": "provenance+approval",
+      "subject": "ed25519:trailhead-2026",
+      "issuer": "ed25519",
+      "value": "UALwMVeNitx8uJnKnTuvpyK6AWuPU7qeuXlv+w8Qju93BSdE5eKHuScVHDA99+IQ9l+rtu0h+078W+0BvORyAg=="
+    }
+  },
+  "source_ref": "local",
+  "written_at": "2026-07-13T19:25:40.658Z"
+}

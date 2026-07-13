@@ -1,5 +1,7 @@
-import { test, expect } from "@playwright/test";
-import { resetAppState, uniqueEmail } from "./helpers";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { test, expect } from "./telemetrytest-fixture";
+import { resetAppState, uniqueEmail, forceExperimentSessionFromEnv } from "./helpers";
 
 async function addHeadlampToCart(page: import("@playwright/test").Page) {
   await page.goto("/shop");
@@ -7,9 +9,30 @@ async function addHeadlampToCart(page: import("@playwright/test").Page) {
   await page.goto("/checkout");
 }
 
+// Namespaced by E2E_VARIANT_LABEL so CI's checkout_button_copy matrix (control vs.
+// reassuring) writes to separate capture files instead of one leg overwriting the other.
+const CAPTURE_DIR = path.join(
+  "telemetrytest-out",
+  `checkout_payment_retry${process.env.E2E_VARIANT_LABEL ? `-${process.env.E2E_VARIANT_LABEL}` : ""}`
+);
+
 test.describe("J3 — Checkout & payment (with retry)", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, telemetryTest }) => {
+    // Must happen before the very first request (including resetAppState's), since proxy.ts
+    // only ever sets th_sid when it's absent.
+    await forceExperimentSessionFromEnv(page);
     await resetAppState(page);
+    await telemetryTest.startJourney("checkout_payment_retry");
+  });
+
+  test.afterEach(async ({ telemetryTest }, testInfo) => {
+    await telemetryTest.endJourney();
+    mkdirSync(CAPTURE_DIR, { recursive: true });
+    const safeName = testInfo.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    writeFileSync(
+      path.join(CAPTURE_DIR, `${safeName}.capture.json`),
+      JSON.stringify(telemetryTest.getCapture(), null, 2)
+    );
   });
 
   test("guest checkout succeeds on the first attempt with a good card", async ({ page }) => {

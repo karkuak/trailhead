@@ -1,0 +1,107 @@
+# TelemetryTest AI — default-branch runs. Modeled on karkuak/qualiber's
+# examples/workflows/customer-example-default.yml: the SINGLE canonical writer, serialized by the
+# concurrency group, merges this push's shards into telemetrytest-state/ + decisions.jsonl and
+# commits. paths-ignore + [skip ci] avoid a merge-commit CI loop.
+name: TelemetryTest AI (default branch)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "telemetrytest-state/**"
+
+concurrency:
+  group: "tt-state-${{ github.repository }}"
+  cancel-in-progress: false
+
+env:
+  QUALIBER_REF: efe364d6d2e03ae531619f3b0e8319e532e8c0a3
+
+jobs:
+  telemetrytest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # commits telemetrytest-state
+      actions: read # downloads the merged PR's shard artifacts
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: trailhead
+
+      # Requires a QUALIBER_PAT repo secret (fine-grained PAT, Contents:Read-only on
+      # karkuak/qualiber only) -- see integration/FRICTION-LOG.md "Step 6". Checked out to
+      # trailhead/.qualiber-vendor so it matches the path tests/e2e/telemetrytest-fixture.ts
+      # imports from in local dev.
+      - uses: actions/checkout@v4
+        with:
+          repository: karkuak/qualiber
+          ref: ${{ env.QUALIBER_REF }}
+          path: trailhead/.qualiber-vendor
+          token: ${{ secrets.QUALIBER_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install deps
+        run: |
+          cd trailhead && npm ci
+          cd .qualiber-vendor && npm ci
+
+      - name: Install Playwright browsers
+        working-directory: trailhead
+        run: npx playwright install --with-deps chromium
+
+      - name: Run J1-J4 E2E (produces captures)
+        working-directory: trailhead
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx playwright test tests/e2e/
+
+      - name: Download merged-PR shards
+        continue-on-error: true
+        working-directory: trailhead
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR=$(gh pr list --search "${{ github.sha }}" --state merged --json number --jq '.[0].number' || true)
+          if [ -n "$PR" ]; then
+            RUN=$(gh run list --workflow "TelemetryTest AI (PR)" --branch "refs/pull/$PR/merge" --status success --limit 1 --json databaseId --jq '.[0].databaseId' || true)
+            [ -n "$RUN" ] && gh run download "$RUN" --pattern "tt-results-*" --dir telemetrytest-out/pr-shards || echo "::warning::PR shard artifacts unavailable (expired?)"
+          fi
+
+      - name: Validate + merge canonical state (all four journeys, observe)
+        working-directory: trailhead
+        run: |
+          CLI="npx tsx .qualiber-vendor/src/cli.ts"
+          STATE="telemetrytest-state"
+
+          $CLI validate --capture telemetrytest-out/signup_onboarding/creates-an-account-and-previews-a-personalized-plan.capture.json \
+            --contract integration/contracts/signup_onboarding.contract.json \
+            --config integration/config/signup_onboarding.workspace.json \
+            --mode observe --out telemetrytest-out/default-run/signup --state-mode commit --state-dir "$STATE"
+
+          $CLI validate --capture "telemetrytest-out/checkout_payment_retry-control/a-declined-first-attempt-recovers-cleanly-on-retry-and-is-tracked-as-recovered.capture.json" \
+            --contract integration/contracts/checkout_payment_retry.contract.json \
+            --config integration/config/checkout_payment_retry.workspace.json \
+            --mode observe --out telemetrytest-out/default-run/checkout --state-mode commit --state-dir "$STATE" \
+            --baseline integration/config/checkout_payment_retry.baseline.json
+
+          $CLI validate --capture telemetrytest-out/trial_conversion/trial-member-views-their-plan-and-converts-to-paid.capture.json \
+            --contract integration/contracts/trial_conversion.contract.json \
+            --config integration/config/trial_conversion.workspace.json \
+            --mode observe --out telemetrytest-out/default-run/conversion --state-mode commit --state-dir "$STATE"
+
+          $CLI validate --capture "telemetrytest-out/cancellation/member-can-decline-every-save-offer-and-cancel-cleanly.capture.json" \
+            --contract integration/contracts/cancellation.contract.json \
+            --config integration/config/cancellation.workspace.json \
+            --mode observe --out telemetrytest-out/default-run/cancellation --state-mode commit --state-dir "$STATE"
+
+      - name: Commit canonical state
+        working-directory: trailhead
+        run: |
+          git config user.name "telemetrytest-bot"
+          git config user.email "telemetrytest-bot@users.noreply.github.com"
+          git add telemetrytest-state
+          git commit -m "chore(telemetrytest-state): merge eligibility+ledger [skip ci]" || echo "no changes"
+          git push

@@ -1,0 +1,32 @@
+{
+  "schema_version": "evidence_pack_v0.1",
+  "rule_id": "signup_onboarding_sequence",
+  "journey_id": "signup_onboarding",
+  "test_id": "j1-signup.spec.ts > J1 — Signup & onboarding > creates an account and previews a personalized plan",
+  "ci_run_id": "local",
+  "mode": "observe",
+  "validation_status": "pass",
+  "ci_blocking": false,
+  "collector_health": "healthy",
+  "findings": [],
+  "observed": {
+    "modeled": [
+      "signup_started",
+      "identify",
+      "signup_completed",
+      "onboarding_started",
+      "onboarding_completed",
+      "plan_preview_viewed"
+    ],
+    "knownUnknown": [],
+    "unmodeled": [
+      "plan_viewed"
+    ]
+  },
+  "excluded_candidates": {
+    "background": [],
+    "orphaned": [],
+    "late": [],
+    "unknown": []
+  }
+}

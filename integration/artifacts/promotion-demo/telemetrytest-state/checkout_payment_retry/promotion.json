@@ -1,0 +1,81 @@
+{
+  "promotion_schema_version": "1.0",
+  "journey_id": "checkout_payment_retry",
+  "rules": {
+    "checkout_payment_retry_sequence": {
+      "promotion_schema_version": "1.0",
+      "journey_id": "checkout_payment_retry",
+      "rule_id": "checkout_payment_retry_sequence",
+      "current_mode": "advisory",
+      "customer_blocking_enabled": true,
+      "pending_approvals": [],
+      "history": [
+        {
+          "kind": "promotion",
+          "to": "review_required",
+          "at": "2026-07-13T19:23:32.595Z",
+          "snapshot_id": "sha256:a6ecbdbba2be86a201bf2bccf9bd03dc0be548d56ce8dd0f4d95b034190597c7",
+          "approvals": [
+            {
+              "role": "qa_owner",
+              "approved_by": "qa@trailhead",
+              "approved_at": "2026-07-13T19:20:05.583Z",
+              "snapshot_id": "sha256:6ddbac427741a2ab0b34989d6450b5089ecdb9be4e83a475c83d050689a0f142"
+            },
+            {
+              "role": "analytics_owner",
+              "approved_by": "analytics@trailhead",
+              "approved_at": "2026-07-13T19:20:06.468Z",
+              "snapshot_id": "sha256:7b700bc9fc824958b13bb21f7b511964d5b0c76218f43211ecf9877c2ddcc08c"
+            },
+            {
+              "role": "engineering_owner",
+              "approved_by": "eng@trailhead",
+              "approved_at": "2026-07-13T19:20:07.307Z",
+              "snapshot_id": "sha256:a9a1bae545e35c78b913ccc0e9e2c832e76323f3a63a8d0baf4e19778a0aac32"
+            }
+          ],
+          "evidence_digest": "sha256:4401a0c32a405501f7b43d3c4d6a5be6febe8675c38c24799dc45327ef0dfcf9"
+        },
+        {
+          "kind": "promotion",
+          "to": "blocking",
+          "at": "2026-07-13T19:25:40.656Z",
+          "snapshot_id": "sha256:2f1fd9660fc2cc2b683a79476277588523b0541fbde5842a3250006a8a4fbebc",
+          "approvals": [
+            {
+              "role": "qa_owner",
+              "approved_by": "qa@trailhead",
+              "approved_at": "2026-07-13T19:25:09.785Z",
+              "snapshot_id": "sha256:1a5a346092610529f495e46bd31978bc52e375955fa9e4f7efd03f9c79b73a5d"
+            },
+            {
+              "role": "analytics_owner",
+              "approved_by": "analytics@trailhead",
+              "approved_at": "2026-07-13T19:25:10.630Z",
+              "snapshot_id": "sha256:cd8f9d7d9d667fed3575d2e64bf930c0e265c69380df41485948d1c1216f20b6"
+            },
+            {
+              "role": "engineering_owner",
+              "approved_by": "eng@trailhead",
+              "approved_at": "2026-07-13T19:25:11.552Z",
+              "snapshot_id": "sha256:69d0a6462e5b72c126368c06de2eff265ebf198888bb273e743f3e1519d6dcbd"
+            }
+          ],
+          "evidence_digest": "sha256:196c575b8be0603d3c89610348ee61422c0e3a8f03b59704f6537bfa5f644899"
+        },
+        {
+          "kind": "demotion",
+          "from": "blocking",
+          "to": "advisory",
+          "at": "2026-07-13T19:29:58.424Z",
+          "snapshot_id": "sha256:16e0bc215ccb31aa6b2119953e63b568b80602e8850c64af225af317d748755f",
+          "triggers": [
+            "rollback trigger: false-positive rate spiked (0.67 > 0.1)"
+          ]
+        }
+      ],
+      "last_evaluated_at": "2026-07-13T19:29:58.424Z"
+    }
+  }
+}

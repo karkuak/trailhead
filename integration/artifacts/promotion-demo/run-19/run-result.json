@@ -1,0 +1,23 @@
+{
+  "runStatus": "clean",
+  "ciExitCode": 0,
+  "blocking": false,
+  "advisoryCommentEligible": true,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "No telemetry rule violations detected (advisory; CI not affected). Quality metrics have degraded — review eligibility state and consider returning to observe mode. (blocking suppressed: auto-demotion triggered this run: rollback trigger: false-positive rate spiked (0.67 > 0.1); no high-severity deterministic violation decided by associated/probably_associated evidence; run status 'clean' is not a violation verdict; blocked finding waived by waiver:174154084a7d… (expires 2026-07-20T19:28:52.875Z, ticket TRAIH-1); blocked finding waived by waiver:7647ac72c995… (expires 2026-07-20T19:27:25.020Z, ticket TRAIH-DEMO))",
+  "blockDecision": {
+    "kill_switch_clear": true,
+    "customer_enabled": true,
+    "rule_in_blocking_state": false,
+    "high_confidence_deterministic_violation": false,
+    "evidence_trustworthy": false,
+    "no_valid_waiver": false
+  },
+  "blockReasons": [
+    "auto-demotion triggered this run: rollback trigger: false-positive rate spiked (0.67 > 0.1)",
+    "no high-severity deterministic violation decided by associated/probably_associated evidence",
+    "run status 'clean' is not a violation verdict",
+    "blocked finding waived by waiver:174154084a7d… (expires 2026-07-20T19:28:52.875Z, ticket TRAIH-1)",
+    "blocked finding waived by waiver:7647ac72c995… (expires 2026-07-20T19:27:25.020Z, ticket TRAIH-DEMO)"
+  ]
+}

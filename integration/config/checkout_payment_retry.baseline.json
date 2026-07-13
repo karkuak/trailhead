@@ -1,0 +1,37 @@
+{
+  "baseline_schema_version": "1.0",
+  "journey_id": "checkout_payment_retry",
+  "baseline_version": "trailhead-2026-07-13",
+  "captured_at": "2026-07-13T00:00:00.000Z",
+  "source_system": "trailhead.events (local ingestion stand-in)",
+  "capture_window": { "start": "2026-07-06T00:00:00.000Z", "end": "2026-07-13T00:00:00.000Z" },
+  "sample_size": 1240,
+  "environment": "production",
+  "app_release_version": "trailhead-0.1.0",
+  "feature_flag_state": {},
+  "experiment_cohort": null,
+  "platform": "web",
+  "browser": "any",
+  "device": null,
+  "geography": null,
+  "test_user_exclusion_policy": "E2E/synthetic sessions excluded",
+  "sampling_rate": 1,
+  "baseline_owner": "trailhead-growth-analytics@example.com",
+  "refresh_cadence_days": 7,
+  "staleness_threshold_days": 30,
+  "known_exclusions": [],
+  "event_signature": [
+    { "name": "checkout_started", "required_properties": ["itemCount", "totalCents"], "occurrence": 1 },
+    { "name": "payment_submitted", "required_properties": ["attemptNumber"], "occurrence": 1 },
+    { "name": "payment_failed", "required_properties": ["attemptNumber", "reason"], "occurrence": 1 },
+    { "name": "payment_retried", "required_properties": ["previousAttempt"], "occurrence": 1 },
+    { "name": "order_completed", "required_properties": ["totalCents", "recovered", "attemptNumber"], "occurrence": 1 }
+  ],
+  "sequence_signature": [
+    "checkout_started",
+    "payment_submitted",
+    "payment_failed",
+    "payment_retried",
+    "order_completed"
+  ]
+}

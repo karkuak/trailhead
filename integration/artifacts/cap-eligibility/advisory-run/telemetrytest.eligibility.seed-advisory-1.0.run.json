@@ -1,0 +1,28 @@
+{
+  "shard_schema_version": "1.0",
+  "run_id": "seed-advisory-1.0",
+  "journey_id": "checkout_payment_retry",
+  "record": {
+    "run_id": "seed-advisory-1.0",
+    "ci_run_id": "local",
+    "timestamp": "2026-07-13T19:16:02.663Z",
+    "run_status": "clean",
+    "mode": "advisory",
+    "vqs_score": 90,
+    "vqs_band": "Strong",
+    "collector_health": "healthy",
+    "capture_coverage": 1,
+    "high_medium_ratio": 1,
+    "fp_rate": 0,
+    "ai_overclaim_count": 0,
+    "time_window_only": false,
+    "evidence_pack_id": "evp_02a7422aaf9f",
+    "findings_count": 0,
+    "promotion_relevant": true,
+    "vqs_cold_start": true
+  },
+  "content_hash": "sha256:06262ddc990fac5cf068e578e36d6275a7d64bbf5ae41808aae29a754356cf69",
+  "written_at": "2026-07-13T19:16:02.664Z",
+  "source_ref": "local",
+  "promotion_relevant": true
+}

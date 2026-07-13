@@ -1,0 +1,103 @@
+# telemetrytest.feedback.yaml — schema version 1.0
+# See docs/process/validation.md for the feedback guide.
+feedback:
+  - finding_id: reviewed-1
+    evidence_pack_id: evp_1586874779cf
+    action: accept
+    user_role: qa_owner
+    confidence: low
+    created_at: 2026-07-13T19:21:17.011Z
+  - finding_id: reviewed-2
+    evidence_pack_id: evp_1586874779cf
+    action: accept
+    user_role: qa_owner
+    confidence: low
+    created_at: 2026-07-13T19:21:17.889Z
+  - finding_id: reviewed-3
+    evidence_pack_id: evp_1586874779cf
+    action: accept
+    user_role: qa_owner
+    confidence: low
+    created_at: 2026-07-13T19:21:18.797Z
+  - finding_id: reviewed-4
+    evidence_pack_id: evp_1586874779cf
+    action: accept
+    user_role: qa_owner
+    confidence: low
+    created_at: 2026-07-13T19:25:37.828Z
+  - finding_id: reviewed-5
+    evidence_pack_id: evp_1586874779cf
+    action: accept
+    user_role: qa_owner
+    confidence: low
+    created_at: 2026-07-13T19:25:39.278Z
+  - finding_id: spike-1
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:48.753Z
+  - finding_id: spike-2
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:49.798Z
+  - finding_id: spike-3
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:50.729Z
+  - finding_id: spike-4
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:51.603Z
+  - finding_id: spike-5
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:52.450Z
+  - finding_id: spike-6
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:53.427Z
+  - finding_id: spike-7
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:54.303Z
+  - finding_id: spike-8
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:55.465Z
+  - finding_id: spike-9
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:56.525Z
+  - finding_id: spike-10
+    evidence_pack_id: evp_51722475fec8
+    action: false_positive
+    user_role: analytics_owner
+    confidence: high
+    comment: FP-spike simulation
+    created_at: 2026-07-13T19:29:57.515Z

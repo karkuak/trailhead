@@ -17,6 +17,11 @@ export default defineConfig({
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: {
+      // NEXT_PUBLIC_* vars are inlined at build time — see analytics-client.ts for why this
+      // is set only for the E2E build, never for `npm run dev` or a real production build.
+      NEXT_PUBLIC_TELEMETRYTEST_FORCE_FETCH: "1",
+    },
   },
   projects: [
     {

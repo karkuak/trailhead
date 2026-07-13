@@ -1,0 +1,53 @@
+{
+  "schema_version": "evidence_pack_v0.1",
+  "rule_id": "checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "test_id": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > a permanently invalid card fails without ever completing the order",
+  "ci_run_id": "local",
+  "mode": "observe",
+  "validation_status": "rule_violation_detected",
+  "ci_blocking": false,
+  "collector_health": "healthy",
+  "findings": [
+    {
+      "finding": "missing_required_event",
+      "severity": "high",
+      "association_confidence": "high",
+      "association_blocking_eligible": true,
+      "policy_blocking_allowed": false,
+      "event": "order_completed",
+      "expected_sequence": [
+        "checkout_started",
+        "payment_submitted",
+        "payment_failed",
+        "payment_retried",
+        "order_completed"
+      ],
+      "actual_sequence": [
+        "checkout_started",
+        "payment_submitted",
+        "payment_failed"
+      ],
+      "note": "no eligible occurrence observed"
+    }
+  ],
+  "observed": {
+    "modeled": [
+      "checkout_started",
+      "payment_submitted",
+      "payment_failed"
+    ],
+    "knownUnknown": [
+      "page_viewed",
+      "product_added_to_cart",
+      "experiment_viewed"
+    ],
+    "unmodeled": []
+  },
+  "excluded_candidates": {
+    "background": [],
+    "orphaned": [],
+    "late": [],
+    "unknown": []
+  }
+}

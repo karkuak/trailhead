@@ -1,0 +1,17 @@
+{
+  "check_run_schema_version": "1.0",
+  "name": "TelemetryTest AI / checkout_payment_retry / checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "rule_id": "checkout_payment_retry_sequence",
+  "conclusion": "action_required",
+  "title": "1 telemetry finding(s) need review",
+  "summary": "This rule is at **review_required**. The run exits 0 — GitHub branch protection enforces the review.\n\nUnacknowledged finding(s):\n- `fp:538fc7854317df18d142a02c` — missing_required_event (event: order_completed)\n\nResolve by committing a signed acknowledgement, e.g.:\n```\ntelemetrytest ack --journey checkout_payment_retry --rule checkout_payment_retry_sequence --finding fp:538fc7854317df18d142a02c --as you@example.com\n```",
+  "unacknowledged": [
+    {
+      "fingerprint": "fp:538fc7854317df18d142a02c",
+      "type": "missing_required_event",
+      "event": "order_completed",
+      "property": null
+    }
+  ]
+}

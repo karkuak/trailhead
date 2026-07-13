@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "test_run_capture_v0.1",
+  "testRunId": "run_0_0",
+  "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+  "journeyId": "checkout_payment_retry",
+  "ciRunId": "local",
+  "events": [
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "4c1c1cee-681d-41b8-ab46-b8ecd2899bdb",
+      "collectorSeq": 0,
+      "sourceEventName": "page_viewed",
+      "canonicalEventName": "page_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:36.510Z",
+      "relTs": 80,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "page": "shop"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1f888e9e69efc3c1d93b082ecf9325baa14ef3b3e4dd5f9f4ced16bee0c07489",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967916510,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "0"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "11833ea3-91aa-4983-8187-7c1ccef3d8a6",
+      "collectorSeq": 1,
+      "sourceEventName": "product_added_to_cart",
+      "canonicalEventName": "product_added_to_cart",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:36.571Z",
+      "relTs": 141,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "productId": "prod_headlamp",
+        "priceCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "47050ae4fbba4eaf411d208bee614f327a5cdaa36472f3791e09de52e3fe0f99",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967916571,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "1"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "42f3ca86-6be2-4af0-8cb2-4df7face62ec",
+      "collectorSeq": 2,
+      "sourceEventName": "checkout_started",
+      "canonicalEventName": "checkout_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:36.689Z",
+      "relTs": 259,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "itemCount": 1,
+        "totalCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "5db0bdfc5155c10ba29738fdc77860cbf319fcd4d3b4ce7483ca30226007b565",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967916689,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "2"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "193934e7-94f7-4504-91ec-fa72a3ffbd68",
+      "collectorSeq": 3,
+      "sourceEventName": "experiment_viewed",
+      "canonicalEventName": "experiment_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:36.689Z",
+      "relTs": 259,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "experiment": "checkout_button_copy",
+        "variant": "control"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "8b2a4ec4a6eb483c8167b89c270e36e0a48fbfe5ce859c6665775816cbba1124",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967916689,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "3"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "c98ebb0e-03f7-48c4-b6b6-eeaba6d79f5f",
+      "collectorSeq": 4,
+      "sourceEventName": "payment_submitted",
+      "canonicalEventName": "payment_submitted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:36.761Z",
+      "relTs": 331,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": null,
+        "attemptNumber": 1,
+        "cardLast4": "[redacted]"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "23b16bef2bbfdf5958257e989aca900d4e1741af0f2e553c13e5bb2db2f95ea0",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967916761,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "4"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "9692880a-fdf8-41c4-9c61-3898af132eb0",
+      "collectorSeq": 5,
+      "sourceEventName": "order_completed",
+      "canonicalEventName": "order_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T18:38:37.598Z",
+      "relTs": 1168,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_ff2c69f3-d6ee-4937-9455-cb524e8f69da",
+        "totalCents": 3400,
+        "recovered": false,
+        "attemptNumber": 1
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "c4686440d259f50c147c5d93c09985d054580026b0656a55382198a4db5adf8a",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783967917598,
+        "normalizationTs": 1783967918082,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "j3-checkout.spec.ts > J3 — Checkout & payment (with retry) > guest checkout succeeds on the first attempt with a good card",
+      "networkRequestId": "5"
+    }
+  ],
+  "markers": [
+    {
+      "kind": "start",
+      "ts": 1783967916430,
+      "relTs": 0
+    },
+    {
+      "kind": "end",
+      "ts": 1783967918081,
+      "relTs": 1651
+    }
+  ],
+  "summary": {
+    "schemaVersion": "collector_run_summary_v0.1",
+    "health": "healthy",
+    "eventsCaptured": 6,
+    "eventsValidationEligible": 6,
+    "eventsBackground": 0,
+    "eventsLate": 0,
+    "eventsOrphaned": 0,
+    "eventsUnknown": 0,
+    "interceptionErrors": 0,
+    "unsupportedBodyTypesObserved": [],
+    "captureStarted": true,
+    "captureEndedCleanly": true
+  }
+}

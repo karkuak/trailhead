@@ -1,0 +1,179 @@
+# TelemetryTest AI — PR runs. Modeled on karkuak/qualiber's
+# examples/workflows/customer-example-pr.yml (LLD §7 topology): PR runs read canonical state
+# read-only and upload their eligibility + decision-snapshot shards as artifacts; the
+# default-branch workflow (telemetrytest-default.yml) merges them after the PR lands.
+#
+# Matrixed over the checkout_button_copy experiment variant (product strategy §8: a variant must
+# emit the *same* journey events as control) — E2E_FORCE_SESSION_ID pins the th_sid cookie to a
+# session id known to hash to each bucket (see tests/e2e/helpers.ts), so both legs produce a real
+# capture without any app code changes. TT_MATRIX_CONTEXT disambiguates the run id per the tool's
+# own matrix-safety contract (B7).
+#
+# NOTE on `uses: karkuak/qualiber@v1`: this does NOT resolve. Confirmed in a real run (PR #1) —
+# GitHub Actions cannot resolve a `uses:` reference into a different PRIVATE repository, even one
+# owned by the same account, and qualiber is (deliberately, per its own patent-disclosure
+# invariant) not published anywhere public. See integration/FRICTION-LOG.md "Step 6". Workaround:
+# `src/action/inputs.ts` reads plain INPUT_<NAME> env vars (GitHub's own JS-action convention, not
+# @actions/core magic), so the packaged action's real compiled entry point
+# (action/dist/index.js — the exact same file `uses:` would have run) can be invoked directly with
+# `node` once those env vars are set by hand. Same code path, same failure firewall, same advisory
+# comment / Check Run posters — not a reimplementation.
+name: TelemetryTest AI (PR)
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: "tt-pr-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  QUALIBER_REF: efe364d6d2e03ae531619f3b0e8319e532e8c0a3
+
+jobs:
+  telemetrytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - { label: control, session_id: ci-session-3 }
+          - { label: reassuring, session_id: ci-session-0 }
+    permissions:
+      contents: read # PR runs never write canonical state
+      checks: write # review_required Check Run (only posts once a rule is promoted)
+      pull-requests: write # advisory PR comment
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: trailhead
+
+      # Requires a QUALIBER_PAT repo secret (fine-grained PAT, Contents:Read-only on
+      # karkuak/qualiber only) -- the default GITHUB_TOKEN cannot access a different repo, even a
+      # private one under the same account. See integration/FRICTION-LOG.md "Step 6".
+      #
+      # Checked out to trailhead/.qualiber-vendor (not a sibling dir) so it lands at the exact
+      # path tests/e2e/telemetrytest-fixture.ts imports from in local dev -- same layout, same
+      # relative imports, no CI-only path branching.
+      - uses: actions/checkout@v4
+        with:
+          repository: karkuak/qualiber
+          ref: ${{ env.QUALIBER_REF }}
+          path: trailhead/.qualiber-vendor
+          token: ${{ secrets.QUALIBER_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Trailhead deps
+        working-directory: trailhead
+        run: npm ci
+
+      - name: Install qualiber deps (source CLI — not published to any registry, see
+          integration/FRICTION-LOG.md)
+        working-directory: trailhead/.qualiber-vendor
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: trailhead
+        run: npx playwright install --with-deps chromium
+
+      - name: Run J1-J4 E2E (produces captures)
+        working-directory: trailhead
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          E2E_FORCE_SESSION_ID: ${{ matrix.variant.session_id }}
+          E2E_VARIANT_LABEL: ${{ matrix.variant.label }}
+        run: npx playwright test tests/e2e/
+
+      - name: TelemetryTest AI — validate checkout_payment_retry (clean success)
+        working-directory: trailhead
+        env:
+          TT_MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+          INPUT_CAPTURE: "telemetrytest-out/checkout_payment_retry-${{ matrix.variant.label }}/guest-checkout-succeeds-on-the-first-attempt-with-a-good-card.capture.json"
+          INPUT_CONTRACT: integration/contracts/checkout_payment_retry.contract.json
+          INPUT_CONFIG: integration/config/checkout_payment_retry.workspace.json
+          INPUT_MODE: advisory
+          INPUT_OUT: "telemetrytest-out/tt-results/checkout-clean-${{ matrix.variant.label }}"
+          INPUT_STATE-MODE: artifact
+          INPUT_ELIGIBILITY-MODE: shard
+          INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .qualiber-vendor/action/dist/index.js
+
+      - name: TelemetryTest AI — validate checkout_payment_retry (recovered success)
+        working-directory: trailhead
+        env:
+          TT_MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+          INPUT_CAPTURE: "telemetrytest-out/checkout_payment_retry-${{ matrix.variant.label }}/a-declined-first-attempt-recovers-cleanly-on-retry-and-is-tracked-as-recovered.capture.json"
+          INPUT_CONTRACT: integration/contracts/checkout_payment_retry.contract.json
+          INPUT_CONFIG: integration/config/checkout_payment_retry.workspace.json
+          INPUT_MODE: advisory
+          INPUT_OUT: "telemetrytest-out/tt-results/checkout-recovered-${{ matrix.variant.label }}"
+          INPUT_STATE-MODE: artifact
+          INPUT_ELIGIBILITY-MODE: shard
+          INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .qualiber-vendor/action/dist/index.js
+
+      # Only one matrix leg needs to validate the variant-independent journeys.
+      - name: TelemetryTest AI — validate signup_onboarding
+        if: matrix.variant.label == 'control'
+        working-directory: trailhead
+        env:
+          INPUT_CAPTURE: "telemetrytest-out/signup_onboarding/creates-an-account-and-previews-a-personalized-plan.capture.json"
+          INPUT_CONTRACT: integration/contracts/signup_onboarding.contract.json
+          INPUT_CONFIG: integration/config/signup_onboarding.workspace.json
+          INPUT_MODE: advisory
+          INPUT_OUT: telemetrytest-out/tt-results/signup
+          INPUT_STATE-MODE: artifact
+          INPUT_ELIGIBILITY-MODE: shard
+          INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .qualiber-vendor/action/dist/index.js
+
+      - name: TelemetryTest AI — validate trial_conversion
+        if: matrix.variant.label == 'control'
+        working-directory: trailhead
+        env:
+          INPUT_CAPTURE: "telemetrytest-out/trial_conversion/trial-member-views-their-plan-and-converts-to-paid.capture.json"
+          INPUT_CONTRACT: integration/contracts/trial_conversion.contract.json
+          INPUT_CONFIG: integration/config/trial_conversion.workspace.json
+          INPUT_MODE: advisory
+          INPUT_OUT: telemetrytest-out/tt-results/conversion
+          INPUT_STATE-MODE: artifact
+          INPUT_ELIGIBILITY-MODE: shard
+          INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .qualiber-vendor/action/dist/index.js
+
+      - name: TelemetryTest AI — validate cancellation (pause / downgrade / full cancel)
+        if: matrix.variant.label == 'control'
+        run: |
+          for LEG in \
+            "member-can-pause-instead-of-cancelling-and-account-stays-active:pause" \
+            "member-can-downgrade-instead-of-cancelling:downgrade" \
+            "member-can-decline-every-save-offer-and-cancel-cleanly:fullcancel"; do
+            CAPTURE_NAME="${LEG%%:*}"; OUT_NAME="${LEG##*:}"
+            npx tsx .qualiber-vendor/src/cli.ts validate \
+              --capture "telemetrytest-out/cancellation/${CAPTURE_NAME}.capture.json" \
+              --contract integration/contracts/cancellation.contract.json \
+              --config integration/config/cancellation.workspace.json \
+              --mode advisory --out "telemetrytest-out/tt-results/cancellation-${OUT_NAME}"
+          done
+        working-directory: trailhead
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: "tt-results-${{ matrix.variant.label }}-${{ github.run_id }}"
+          path: |
+            trailhead/telemetrytest-out/tt-results/**
+          retention-days: 14
+
+      - name: File/update Jira findings
+        if: always()
+        working-directory: trailhead
+        env:
+          JIRA_CLOUD_ID: ${{ secrets.JIRA_CLOUD_ID }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: node integration/scripts/jira-loop.mjs telemetrytest-out/tt-results

@@ -1,0 +1,19 @@
+{
+  "runStatus": "rule_violation_detected",
+  "ciExitCode": 0,
+  "blocking": false,
+  "advisoryCommentEligible": true,
+  "evidencePackGenerated": true,
+  "customerVisibleMessage": "Deterministic telemetry rule violation detected (advisory; CI not affected). (blocking suppressed: blocked finding waived by waiver:7647ac72c995… (expires 2026-07-20T19:27:25.020Z, ticket TRAIH-DEMO))",
+  "blockDecision": {
+    "kill_switch_clear": true,
+    "customer_enabled": true,
+    "rule_in_blocking_state": true,
+    "high_confidence_deterministic_violation": true,
+    "evidence_trustworthy": true,
+    "no_valid_waiver": false
+  },
+  "blockReasons": [
+    "blocked finding waived by waiver:7647ac72c995… (expires 2026-07-20T19:27:25.020Z, ticket TRAIH-DEMO)"
+  ]
+}

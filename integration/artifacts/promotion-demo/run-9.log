@@ -1,0 +1,5 @@
+::notice::TelemetryTest AI: matrix jobs must set TT_MATRIX_CONTEXT (from toJSON(matrix)) or TT_SHARD_INDEX so run ids stay unique.
+TelemetryTest AI — clean
+No telemetry rule violations detected (advisory; CI not affected).
+Mode: advisory | CI blocking: No
+Advisory comment eligible: Yes

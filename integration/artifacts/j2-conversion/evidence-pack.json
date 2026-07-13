@@ -1,0 +1,35 @@
+{
+  "schema_version": "evidence_pack_v0.1",
+  "rule_id": "trial_conversion_sequence",
+  "journey_id": "trial_conversion",
+  "test_id": "j2-conversion.spec.ts > J2 — Trial to subscription conversion > trial member views their plan and converts to paid",
+  "ci_run_id": "local",
+  "mode": "observe",
+  "validation_status": "pass",
+  "ci_blocking": false,
+  "collector_health": "healthy",
+  "findings": [],
+  "observed": {
+    "modeled": [
+      "plan_viewed",
+      "upgrade_started",
+      "trial_converted",
+      "plan_viewed"
+    ],
+    "knownUnknown": [],
+    "unmodeled": [
+      "signup_started",
+      "identify",
+      "signup_completed",
+      "onboarding_started",
+      "onboarding_completed",
+      "plan_preview_viewed"
+    ]
+  },
+  "excluded_candidates": {
+    "background": [],
+    "orphaned": [],
+    "late": [],
+    "unknown": []
+  }
+}

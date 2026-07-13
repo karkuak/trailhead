@@ -1,0 +1,416 @@
+{
+  "schemaVersion": "test_run_capture_v0.1",
+  "testRunId": "run_0_0",
+  "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+  "journeyId": "checkout_payment_retry",
+  "ciRunId": "local",
+  "events": [
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "e68d5e31-bb5a-4d88-9660-73e987cdd94b",
+      "collectorSeq": 0,
+      "sourceEventName": "page_viewed",
+      "canonicalEventName": "page_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:38.428Z",
+      "relTs": 105,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "page": "shop"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "36851765c6a106c6471e1170f16fa420380d891db87e6c511de48fba54115c7f",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971338428,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "0"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "6e4069ab-2e4d-488f-b508-05b69e28efea",
+      "collectorSeq": 1,
+      "sourceEventName": "product_added_to_cart",
+      "canonicalEventName": "product_added_to_cart",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:38.490Z",
+      "relTs": 167,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "productId": "prod_headlamp",
+        "priceCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "643c1fa1787c4bbb32baa5981490a7a04b63b64054bb83f6bbdba07710832b57",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971338490,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "1"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "50ef6162-0ff5-490f-9e3e-ba96b4d89bfe",
+      "collectorSeq": 2,
+      "sourceEventName": "checkout_started",
+      "canonicalEventName": "checkout_started",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:38.631Z",
+      "relTs": 308,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "itemCount": 1,
+        "totalCents": 3400
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "5f6908c74dcb89f037fc30412ba706d5c3e296916321730074d350c760e77318",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971338631,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "2"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "23c44545-b7da-4496-8d8b-62058679ab0b",
+      "collectorSeq": 3,
+      "sourceEventName": "experiment_viewed",
+      "canonicalEventName": "experiment_viewed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:38.632Z",
+      "relTs": 309,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "experiment": "checkout_button_copy",
+        "variant": "reassuring"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "1964916fb4d9c63eb914e8ca414eedb902f2f171c1f23ffa927e5da4a6229433",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971338632,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "3"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "83514183-5755-46b8-97af-7c22abc8d9fd",
+      "collectorSeq": 4,
+      "sourceEventName": "payment_submitted",
+      "canonicalEventName": "payment_submitted",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:38.710Z",
+      "relTs": 387,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": null,
+        "attemptNumber": 1,
+        "cardLast4": "[redacted]"
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "e975c28092d955b6e62d9a775fae6c659514ce47371028a2f505ff18d3ea7767",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971338710,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "4"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "55734efe-971b-4666-b42a-aa34e816ceda",
+      "collectorSeq": 5,
+      "sourceEventName": "order_completed",
+      "canonicalEventName": "order_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:39.448Z",
+      "relTs": 1125,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "orderId": "order_4daa81bb-2516-45e0-a5ab-e41b656f041a",
+        "totalCents": 3400,
+        "recovered": false,
+        "attemptNumber": 1
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 1,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "within test window",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": true,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "952ced85f179b1f139f7c067e6a02c17529a1ef47f947f28a3e6a7cc2a4fdded",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971339448,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "5"
+    },
+    {
+      "schemaVersion": "canonical_telemetry_event_v0.1",
+      "eventId": "0ebea862-d196-408b-a658-63fcfba253e4",
+      "collectorSeq": 6,
+      "sourceEventName": "order_completed",
+      "canonicalEventName": "order_completed",
+      "source": "playwright_collector_0.1",
+      "ciRunId": "local",
+      "timestamp": "2026-07-13T19:35:49.518Z",
+      "relTs": 11195,
+      "environment": "ci",
+      "platform": "web",
+      "properties": {
+        "totalCents": 3400,
+        "recovered": false,
+        "attemptNumber": 1,
+        "late": true
+      },
+      "context": {
+        "browser": "chromium",
+        "collectorVersion": "playwright_collector_0.1"
+      },
+      "associationConfidence": "high",
+      "associationScore": 0.9,
+      "associationReasons": [
+        "test_id matched",
+        "browser context matched",
+        "worker index matched"
+      ],
+      "associationSignals": {
+        "injected_test_id": true,
+        "browser_context": true,
+        "within_window": false,
+        "worker_index": true,
+        "within_grace_window": false,
+        "page_session": false
+      },
+      "associationBlockingEligible": true,
+      "primary": "validation_eligible",
+      "flags": [
+        "associated"
+      ],
+      "eventClass": "associated",
+      "lineage": {
+        "collectorVersion": "playwright_collector_0.1",
+        "rawPayloadHash": "654067c2eba535326982d542541afcee495b0d8ed94f34d2e3877f35d7815837",
+        "sourceEndpoint": "http://localhost:3100/api/track",
+        "captureTs": 1783971349518,
+        "normalizationTs": 1783971350113,
+        "browserContextId": "ctx_0"
+      },
+      "journeyId": "checkout_payment_retry",
+      "testId": "break-scenarios/late-event.spec.ts > late order_completed after journey window closes",
+      "networkRequestId": "6"
+    }
+  ],
+  "markers": [
+    {
+      "kind": "start",
+      "ts": 1783971338323,
+      "relTs": 0
+    },
+    {
+      "kind": "end",
+      "ts": 1783971339506,
+      "relTs": 1183
+    }
+  ],
+  "summary": {
+    "schemaVersion": "collector_run_summary_v0.1",
+    "health": "healthy",
+    "eventsCaptured": 7,
+    "eventsValidationEligible": 7,
+    "eventsBackground": 0,
+    "eventsLate": 0,
+    "eventsOrphaned": 0,
+    "eventsUnknown": 0,
+    "interceptionErrors": 0,
+    "unsupportedBodyTypesObserved": [],
+    "captureStarted": true,
+    "captureEndedCleanly": true
+  }
+}

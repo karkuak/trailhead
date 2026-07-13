@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="1" skipped="0">
+  <testsuite name="cancellation" tests="1" failures="1" skipped="0">
+    <testcase classname="cancellation" name="cancellation_sequence">
+      <failure message="high forbidden_event_observed (order_completed)" type="telemetry_rule_violation"/>
+    </testcase>
+  </testsuite>
+</testsuites>

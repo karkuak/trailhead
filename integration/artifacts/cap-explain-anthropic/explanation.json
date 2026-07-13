@@ -1,0 +1,14 @@
+{
+  "text": "For rule `checkout_payment_retry_sequence` on journey `checkout_payment_retry`, a required event (`order_completed`) was expected but not observed among the validation-eligible events. The rule expected checkout_started then payment_submitted then payment_failed then payment_retried then order_completed, while the run produced checkout_started then payment_submitted then payment_failed. This result is advisory (mode: observe, CI blocking: no) and is not a release signal.",
+  "provider": "template",
+  "model": "template-deterministic-0.1",
+  "promptVersion": "telemetry_explainer_v0.1",
+  "guardrailPassed": false,
+  "violations": [
+    {
+      "rule": "provider_error",
+      "matched": "Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted"
+    }
+  ],
+  "fellBackToTemplate": true
+}

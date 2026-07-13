@@ -1,0 +1,48 @@
+{
+  "rule_contract_version": "checkout_payment_retry_v1",
+  "rule_id": "checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "source": "docs/analytics/tracking-plan.md#j3-checkout--payment-with-retry",
+  "owner": "trailhead_growth_analytics",
+  "mode": "observe",
+  "severity": "high",
+  "event_aliases": {
+    "checkout_started": ["checkout_started"],
+    "payment_submitted": ["payment_submitted"],
+    "payment_failed": ["payment_failed"],
+    "payment_retried": ["payment_retried"],
+    "order_completed": ["order_completed"]
+  },
+  "expected_path": [
+    "checkout_started",
+    "payment_submitted",
+    "payment_failed",
+    "payment_retried",
+    "order_completed"
+  ],
+  "optional_events": ["payment_failed", "payment_retried"],
+  "forbidden_events": [
+    { "event": "trial_converted", "severity": "high" },
+    { "event": "cancellation_completed", "severity": "high" }
+  ],
+  "property_consistency": [
+    {
+      "events": ["order_completed"],
+      "property": "recovered",
+      "must_be_present": true,
+      "value_type": "boolean",
+      "severity": "high"
+    }
+  ],
+  "required_properties": {
+    "checkout_started": { "itemCount": "number", "totalCents": "number" },
+    "payment_submitted": { "attemptNumber": "number" },
+    "payment_failed": { "attemptNumber": "number", "reason": "string" },
+    "payment_retried": { "previousAttempt": "number" },
+    "order_completed": { "totalCents": "number", "recovered": "boolean", "attemptNumber": "number" }
+  },
+  "known_unknowns": ["experiment_viewed", "page_viewed", "product_added_to_cart"],
+  "approved_by": "trailhead_growth_analytics_owner",
+  "approved_at": "2026-07-13T18:00:00Z",
+  "approved_for_version": "checkout_payment_retry_v1"
+}

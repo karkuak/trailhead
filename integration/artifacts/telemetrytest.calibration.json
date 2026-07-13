@@ -1,0 +1,17 @@
+{
+  "calibration_schema_version": "1.0",
+  "journey_id": "unknown",
+  "updated_at": "2026-07-13T19:12:34.564Z",
+  "entries": [
+    {
+      "entry_id": "d7240a067c1beb8f",
+      "feedback_id": "2c9d42fbffa116d6",
+      "finding_id": "missing_required_event:order_completed",
+      "evidence_pack_id": "evp_81933758c97a",
+      "ground_truth": "false_positive",
+      "confidence": "high",
+      "context_summary": "no evidence pack available",
+      "promoted_at": "2026-07-13T19:12:34.564Z"
+    }
+  ]
+}

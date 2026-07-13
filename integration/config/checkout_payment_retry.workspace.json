@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "workspace_config_v1",
+  "workspaceId": "trailhead",
+  "productVersion": "0.1.0",
+  "environment": "ci",
+  "journey": {
+    "schemaVersion": "journey_config_v1",
+    "journeyId": "checkout_payment_retry",
+    "displayName": "Checkout & Payment (with retry)",
+    "businessOwner": "Trailhead Product",
+    "qaOwner": "Trailhead Engineering",
+    "analyticsOwner": "Trailhead Growth Analytics",
+    "ciSystem": "github_actions",
+    "framework": "playwright",
+    "ruleSource": "integration/contracts/checkout_payment_retry.contract.json",
+    "mode": "observe",
+    "knownUnknowns": ["experiment_viewed", "page_viewed", "product_added_to_cart"]
+  }
+}

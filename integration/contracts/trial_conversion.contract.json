@@ -1,0 +1,30 @@
+{
+  "rule_contract_version": "trial_conversion_v1",
+  "rule_id": "trial_conversion_sequence",
+  "journey_id": "trial_conversion",
+  "source": "docs/analytics/tracking-plan.md#j2--trial--subscription-conversion",
+  "owner": "trailhead_growth_analytics",
+  "mode": "observe",
+  "severity": "high",
+  "event_aliases": {
+    "plan_viewed": ["plan_viewed"],
+    "upgrade_started": ["upgrade_started"],
+    "trial_converted": ["trial_converted"]
+  },
+  "expected_path": ["plan_viewed", "upgrade_started", "trial_converted"],
+  "optional_events": [],
+  "forbidden_events": [
+    { "event": "order_completed", "severity": "high" },
+    { "event": "cancellation_completed", "severity": "high" }
+  ],
+  "property_consistency": [],
+  "required_properties": {
+    "plan_viewed": { "plan": "string", "subscriptionStatus": "string" },
+    "upgrade_started": { "fromPlan": "string" },
+    "trial_converted": { "plan": "string", "previousPlan": "string", "mrrCents": "number" }
+  },
+  "known_unknowns": [],
+  "approved_by": "trailhead_growth_analytics_owner",
+  "approved_at": "2026-07-13T18:00:00Z",
+  "approved_for_version": "trial_conversion_v1"
+}

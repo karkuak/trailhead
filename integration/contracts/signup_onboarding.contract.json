@@ -1,0 +1,46 @@
+{
+  "rule_contract_version": "signup_onboarding_v1",
+  "rule_id": "signup_onboarding_sequence",
+  "journey_id": "signup_onboarding",
+  "source": "docs/analytics/tracking-plan.md#j1--signup--onboarding",
+  "owner": "trailhead_growth_analytics",
+  "mode": "observe",
+  "severity": "high",
+  "event_aliases": {
+    "signup_started": ["signup_started"],
+    "identify": ["identify"],
+    "signup_completed": ["signup_completed"],
+    "onboarding_started": ["onboarding_started"],
+    "onboarding_completed": ["onboarding_completed"],
+    "plan_preview_viewed": ["plan_preview_viewed"]
+  },
+  "expected_path": [
+    "signup_started",
+    "identify",
+    "signup_completed",
+    "onboarding_started",
+    "onboarding_completed",
+    "plan_preview_viewed"
+  ],
+  "optional_events": [],
+  "forbidden_events": [
+    { "event": "trial_converted", "severity": "high" },
+    { "event": "order_completed", "severity": "high" },
+    { "event": "cancellation_completed", "severity": "high" }
+  ],
+  "property_consistency": [],
+  "required_properties": {
+    "signup_started": { "method": "string" },
+    "signup_completed": { "userId": "string", "trialEndsAt": "string" },
+    "onboarding_completed": {
+      "experienceLevel": "string",
+      "season": "string",
+      "suggestedPlan": "string"
+    },
+    "plan_preview_viewed": { "plan": "string" }
+  },
+  "known_unknowns": [],
+  "approved_by": "trailhead_growth_analytics_owner",
+  "approved_at": "2026-07-13T18:00:00Z",
+  "approved_for_version": "signup_onboarding_v1"
+}

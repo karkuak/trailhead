@@ -1,0 +1,10 @@
+{
+  "check_run_schema_version": "1.0",
+  "name": "TelemetryTest AI / checkout_payment_retry / checkout_payment_retry_sequence",
+  "journey_id": "checkout_payment_retry",
+  "rule_id": "checkout_payment_retry_sequence",
+  "conclusion": "neutral",
+  "title": "Review not comparable",
+  "summary": "TelemetryTest AI could not evaluate the review-required check: auto-demotion triggered this run. The run exits 0; no gate is applied.",
+  "unacknowledged": []
+}
