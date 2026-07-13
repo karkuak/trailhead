@@ -28,11 +28,14 @@ jobs:
         with:
           path: trailhead
 
+      # Requires a QUALIBER_PAT repo secret (fine-grained PAT, Contents:Read-only on
+      # karkuak/qualiber only) -- see integration/FRICTION-LOG.md "Step 6".
       - uses: actions/checkout@v4
         with:
           repository: karkuak/qualiber
           ref: ${{ env.QUALIBER_REF }}
           path: qualiber
+          token: ${{ secrets.QUALIBER_PAT }}
 
       - uses: actions/setup-node@v4
         with:
