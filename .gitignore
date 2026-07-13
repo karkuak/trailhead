@@ -15,10 +15,6 @@
 /playwright-report/
 /test-results/
 
-# sqlite data
-/data/*.db
-/data/*.db-*
-
 # next.js
 /.next/
 /out/
@@ -41,6 +37,11 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# agent skill docs installed by `vercel integration add` (not app code)
+/.agents/
+/.claude/
+/skills-lock.json
 
 # typescript
 *.tsbuildinfo

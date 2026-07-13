@@ -25,20 +25,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Requires a DATABASE_URL repo secret (a Neon Postgres connection
+      # string) -- see docs/product/overview.md for why persistence is
+      # Postgres rather than a local file.
       - name: Build
         run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Lint
         run: npm run lint
 
       - name: Unit tests
         run: npm run test:unit
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
       - name: E2E tests
         run: npm run test:e2e
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Upload Playwright report
         if: failure()
@@ -67,9 +76,10 @@ jobs:
         run: npm ci
 
       # Requires VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID repo secrets.
-      # Every PR gets its own isolated preview URL with its own SQLite file
-      # (TRAILHEAD_DB_PATH is set per-deployment by the hosting platform),
-      # per the "preview environments" principle in the product strategy (§8).
+      # Every PR gets its own isolated preview URL, and the Neon/Vercel
+      # integration provisions a matching isolated Postgres branch per
+      # preview automatically, per the "preview environments" principle in
+      # the product strategy (§8).
       - name: Deploy to Vercel (preview)
         id: deploy
         env:

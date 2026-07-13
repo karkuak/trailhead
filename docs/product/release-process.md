@@ -8,9 +8,13 @@
 2. **Build** — `npm run build` (Next.js production build; also type-checks)
 3. **Lint** — `npm run lint` (ESLint flat config, including React Hooks rules)
 4. **Unit tests** — `npm run test:unit` (Vitest — experiment bucketing, analytics helpers)
-5. **E2E tests** — `npm run test:e2e` (Playwright — J1–J4 against a freshly built app, isolated
-   SQLite DB per run via `TRAILHEAD_DB_PATH`)
+5. **E2E tests** — `npm run test:e2e` (Playwright — J1–J4 against a freshly built app; each test
+   resets state via `POST /api/test/reset` rather than relying on a throwaway DB file, since
+   persistence is a real Postgres database — see below)
 6. **Preview deploy** — deploys the PR's branch to an isolated preview environment (see below)
+
+CI needs a `DATABASE_URL` repo secret (a Neon connection string) for the build/unit/E2E steps to run
+against — see `docs/product/overview.md` for why this is Postgres rather than a local file.
 
 Merging is blocked until all of the above are green. No step is skipped for "small" changes —
 correctness of J1–J4 depends on all of them together (a passing build with a broken journey is
@@ -18,10 +22,10 @@ exactly the ambiguous-outcome failure mode the strategy calls out in §9).
 
 ## Preview environments
 
-Every PR gets its own preview deployment (Vercel, one project per PR via the standard
-GitHub-integration flow) so a reviewer — or an experiment variant — can be exercised end-to-end
-before it reaches members. Preview environments use their own isolated SQLite file
-(`TRAILHEAD_DB_PATH` set per-deployment) and `ALLOW_TEST_RESET` is available so the E2E suite (or a
+Every PR gets its own preview deployment (Vercel, via the standard GitHub-integration flow) so a
+reviewer — or an experiment variant — can be exercised end-to-end before it reaches members. The
+Neon/Vercel integration provisions an isolated Postgres branch per preview deployment automatically,
+so preview data never touches production. `ALLOW_TEST_RESET` is available so the E2E suite (or a
 reviewer) can reset state via `POST /api/test/reset` without touching production data. That endpoint
 refuses to run in `production` unless `ALLOW_TEST_RESET` is explicitly set, so it can never be hit
 against real member data by accident.

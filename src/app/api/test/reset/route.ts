@@ -7,6 +7,6 @@ export async function POST() {
   if (process.env.NODE_ENV === "production" && !process.env.ALLOW_TEST_RESET) {
     return NextResponse.json({ error: "Not available in production." }, { status: 403 });
   }
-  resetDatabase();
+  await resetDatabase();
   return NextResponse.json({ ok: true });
 }

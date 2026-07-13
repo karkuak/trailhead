@@ -15,11 +15,15 @@ See [`docs/product/overview.md`](./docs/product/overview.md) for the architectur
 
 ```bash
 npm install
+vercel env pull .env.local   # fetches DATABASE_URL for the Neon Postgres branch
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The app seeds its own SQLite database
-(`data/trailhead.db`) on first run — no external services required.
+Open [http://localhost:3000](http://localhost:3000). Persistence is Postgres (via the
+[Neon](https://neon.tech) Vercel integration) — schema and product seed data are created
+automatically on first connection (`src/lib/db.ts`'s `ensureReady()`), no manual migration step.
+Every environment (dev/preview/prod) gets its own Neon branch through the Vercel integration, so
+they never share state.
 
 ## Scripts
 
@@ -30,7 +34,7 @@ Open [http://localhost:3000](http://localhost:3000). The app seeds its own SQLit
 | `npm start` | Run the production build |
 | `npm run lint` | ESLint |
 | `npm run test:unit` | Vitest unit tests |
-| `npm run test:e2e` | Playwright E2E suite (builds + starts the app on an in-memory DB automatically) |
+| `npm run test:e2e` | Playwright E2E suite (builds + starts the app, resets DB state before each test via `/api/test/reset`) |
 
 ## Test cards (checkout demo)
 

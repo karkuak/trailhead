@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import { db } from "./db";
+import { queryOne } from "./db";
 import type { UserRecord } from "./types";
 
 export const SESSION_COOKIE = "th_uid";
@@ -41,14 +41,12 @@ export async function getAnalyticsSessionId(): Promise<string> {
   return store.get(ANON_SESSION_COOKIE)?.value ?? "unknown-session";
 }
 
-export function getUserById(userId: string): UserRecord | undefined {
-  return db.prepare(`SELECT * FROM users WHERE id = ?`).get(userId) as
-    | UserRecord
-    | undefined;
+export async function getUserById(userId: string): Promise<UserRecord | undefined> {
+  return queryOne<UserRecord>(`SELECT * FROM users WHERE id = $1`, [userId]);
 }
 
 export async function getCurrentUser(): Promise<UserRecord | null> {
   const userId = await getSessionUserId();
   if (!userId) return null;
-  return getUserById(userId) ?? null;
+  return (await getUserById(userId)) ?? null;
 }

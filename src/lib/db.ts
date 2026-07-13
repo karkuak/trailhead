@@ -1,38 +1,47 @@
-import Database from "better-sqlite3";
-import path from "node:path";
-import fs from "node:fs";
+import { Pool } from "pg";
 import { PRODUCTS } from "./products";
 
-// Deterministic, seedable SQLite persistence. One file per environment,
-// controlled by TRAILHEAD_DB_PATH so tests/preview can use isolated,
-// disposable databases while dev/prod share the default file.
-const DEFAULT_DB_PATH = path.join(process.cwd(), "data", "trailhead.db");
-const dbPath = process.env.TRAILHEAD_DB_PATH || DEFAULT_DB_PATH;
-
-if (dbPath !== ":memory:") {
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+// Postgres (Neon) persistence. DATABASE_URL is provided by the Vercel/Neon
+// integration in every environment (dev/preview/prod each get their own
+// branch); locally it comes from `.env.local` via `vercel env pull`.
+function getConnectionString(): string {
+  const value = process.env.DATABASE_URL;
+  if (!value) {
+    throw new Error("DATABASE_URL is not set. Run `vercel env pull .env.local` to fetch it.");
+  }
+  return value;
 }
+const connectionString = getConnectionString();
 
 declare global {
-  var __trailheadDb: Database.Database | undefined;
+  var __trailheadPool: Pool | undefined;
 }
 
-function createConnection(): Database.Database {
-  const db = new Database(dbPath);
-  // next build's data-collection step spins up multiple worker processes
-  // that each open this same file; set the busy timeout first so even the
-  // initial journal_mode/schema/seed writes wait instead of throwing
-  // SQLITE_BUSY when another worker holds the lock.
-  db.pragma("busy_timeout = 5000");
-  db.pragma("journal_mode = WAL");
-  db.pragma("foreign_keys = ON");
-  return db;
+function createPool(): Pool {
+  return new Pool({
+    connectionString,
+    ssl: connectionString.includes("localhost") ? undefined : { rejectUnauthorized: false },
+  });
 }
 
-// Reuse a single connection across hot-reloads in dev.
-export const db = global.__trailheadDb ?? createConnection();
+// Reuse a single pool across hot-reloads in dev.
+export const pool = global.__trailheadPool ?? createPool();
 if (process.env.NODE_ENV !== "production") {
-  global.__trailheadDb = db;
+  global.__trailheadPool = pool;
+}
+
+export async function query<T = unknown>(sql: string, params: unknown[] = []): Promise<T[]> {
+  await ensureReady();
+  const result = await pool.query(sql, params);
+  return result.rows as T[];
+}
+
+export async function queryOne<T = unknown>(
+  sql: string,
+  params: unknown[] = []
+): Promise<T | undefined> {
+  const rows = await query<T>(sql, params);
+  return rows[0];
 }
 
 export const SCHEMA_SQL = `
@@ -67,39 +76,36 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS orders (
   id TEXT PRIMARY KEY,
-  user_id TEXT,
+  user_id TEXT REFERENCES users(id),
   guest_email TEXT,
   status TEXT NOT NULL DEFAULT 'pending',
   total_cents INTEGER NOT NULL,
   had_failed_attempt INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
-  completed_at TEXT,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  completed_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS order_items (
   id TEXT PRIMARY KEY,
-  order_id TEXT NOT NULL,
-  product_id TEXT NOT NULL,
+  order_id TEXT NOT NULL REFERENCES orders(id),
+  product_id TEXT NOT NULL REFERENCES products(id),
   quantity INTEGER NOT NULL,
-  price_cents INTEGER NOT NULL,
-  FOREIGN KEY (order_id) REFERENCES orders(id),
-  FOREIGN KEY (product_id) REFERENCES products(id)
+  price_cents INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS payment_attempts (
   id TEXT PRIMARY KEY,
-  order_id TEXT NOT NULL,
+  order_id TEXT NOT NULL REFERENCES orders(id),
   attempt_number INTEGER NOT NULL,
   card_last4 TEXT NOT NULL,
   status TEXT NOT NULL,
   failure_reason TEXT,
-  created_at TEXT NOT NULL,
-  FOREIGN KEY (order_id) REFERENCES orders(id)
+  created_at TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS events (
-  id TEXT PRIMARY KEY,
+  seq BIGSERIAL PRIMARY KEY,
+  id TEXT UNIQUE NOT NULL,
   event_name TEXT NOT NULL,
   user_id TEXT,
   session_id TEXT NOT NULL,
@@ -108,31 +114,54 @@ CREATE TABLE IF NOT EXISTS events (
 );
 `;
 
-db.exec(SCHEMA_SQL);
-
 export { PRODUCTS };
 
-function seedProducts() {
-  const insert = db.prepare(
-    `INSERT OR IGNORE INTO products (id, slug, name, description, price_cents, category)
-     VALUES (@id, @slug, @name, @description, @priceCents, @category)`
+async function seedProducts() {
+  const values = PRODUCTS.map(
+    (_, i) =>
+      `($${i * 6 + 1}, $${i * 6 + 2}, $${i * 6 + 3}, $${i * 6 + 4}, $${i * 6 + 5}, $${i * 6 + 6})`
+  ).join(", ");
+  const params = PRODUCTS.flatMap((p) => [
+    p.id,
+    p.slug,
+    p.name,
+    p.description,
+    p.priceCents,
+    p.category,
+  ]);
+  // Uses the raw pool, not query()/queryOne(), since this runs from inside
+  // ensureReady() itself -- routing through query() would re-enter
+  // ensureReady() and deadlock on its own in-flight promise.
+  await pool.query(
+    `INSERT INTO products (id, slug, name, description, price_cents, category)
+     VALUES ${values}
+     ON CONFLICT (id) DO NOTHING`,
+    params
   );
-  const insertMany = db.transaction((products: typeof PRODUCTS) => {
-    for (const product of products) insert.run(product);
-  });
-  insertMany(PRODUCTS);
 }
 
-seedProducts();
+let initialized: Promise<void> | undefined;
+
+/** Ensures schema + seed data exist. Safe to call repeatedly (idempotent). */
+export function ensureReady(): Promise<void> {
+  if (!initialized) {
+    initialized = (async () => {
+      await pool.query(SCHEMA_SQL);
+      await seedProducts();
+    })();
+  }
+  return initialized;
+}
 
 /** Wipes all rows. Test/dev only — gated by caller. */
-export function resetDatabase() {
-  db.exec(`
+export async function resetDatabase() {
+  await ensureReady();
+  await pool.query(`
     DELETE FROM events;
     DELETE FROM payment_attempts;
     DELETE FROM order_items;
     DELETE FROM orders;
     DELETE FROM users;
   `);
-  seedProducts();
+  await seedProducts();
 }

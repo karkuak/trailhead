@@ -1,24 +1,14 @@
-import { beforeAll, describe, expect, it } from "vitest";
-import type { recordEvent as RecordEvent, getEventsForSession as GetEventsForSession } from "@/lib/analytics-server";
-
-let recordEvent: typeof RecordEvent;
-let getEventsForSession: typeof GetEventsForSession;
-
-beforeAll(async () => {
-  process.env.TRAILHEAD_DB_PATH = ":memory:";
-  const mod = await import("@/lib/analytics-server");
-  recordEvent = mod.recordEvent;
-  getEventsForSession = mod.getEventsForSession;
-});
+import { describe, expect, it } from "vitest";
+import { recordEvent, getEventsForSession } from "@/lib/analytics-server";
 
 describe("recordEvent", () => {
-  it("persists events retrievable by session, in insertion order", () => {
-    const sessionId = "unit-test-session";
-    recordEvent({ event: "checkout_started", sessionId, properties: { totalCents: 3400 } });
-    recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 1 } });
-    recordEvent({ event: "payment_failed", sessionId, properties: { reason: "card_declined" } });
+  it("persists events retrievable by session, in insertion order", async () => {
+    const sessionId = `unit-test-session-${crypto.randomUUID()}`;
+    await recordEvent({ event: "checkout_started", sessionId, properties: { totalCents: 3400 } });
+    await recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 1 } });
+    await recordEvent({ event: "payment_failed", sessionId, properties: { reason: "card_declined" } });
 
-    const events = getEventsForSession(sessionId);
+    const events = await getEventsForSession(sessionId);
     expect(events.map((e) => e.event_name)).toEqual([
       "checkout_started",
       "payment_submitted",
@@ -26,19 +16,19 @@ describe("recordEvent", () => {
     ]);
   });
 
-  it("never merges a failed-then-succeeded sequence into a single ambiguous event", () => {
-    const sessionId = "unit-test-recovery";
-    recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 1 } });
-    recordEvent({ event: "payment_failed", sessionId, properties: { attemptNumber: 1 } });
-    recordEvent({ event: "payment_retried", sessionId, properties: {} });
-    recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 2 } });
-    recordEvent({
+  it("never merges a failed-then-succeeded sequence into a single ambiguous event", async () => {
+    const sessionId = `unit-test-recovery-${crypto.randomUUID()}`;
+    await recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 1 } });
+    await recordEvent({ event: "payment_failed", sessionId, properties: { attemptNumber: 1 } });
+    await recordEvent({ event: "payment_retried", sessionId, properties: {} });
+    await recordEvent({ event: "payment_submitted", sessionId, properties: { attemptNumber: 2 } });
+    await recordEvent({
       event: "order_completed",
       sessionId,
       properties: { recovered: true, attemptNumber: 2 },
     });
 
-    const events = getEventsForSession(sessionId);
+    const events = await getEventsForSession(sessionId);
     const failedIndex = events.findIndex((e) => e.event_name === "payment_failed");
     const completedIndex = events.findIndex((e) => e.event_name === "order_completed");
 

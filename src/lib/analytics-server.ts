@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { db } from "./db";
+import { query } from "./db";
 
 export interface TrackedEvent {
   event: string;
@@ -8,17 +8,12 @@ export interface TrackedEvent {
   properties?: Record<string, unknown>;
 }
 
-const insertEvent = db.prepare(
-  `INSERT INTO events (id, event_name, user_id, session_id, properties, created_at)
-   VALUES (@id, @event_name, @user_id, @session_id, @properties, @created_at)`
-);
-
 /**
  * Single ingestion point for every analytics event in the app. This stands in
  * for "forward to the warehouse" in v1: it persists the row (so tests and the
  * tracking-plan docs can assert on it) and logs a structured line to stdout.
  */
-export function recordEvent(evt: TrackedEvent) {
+export async function recordEvent(evt: TrackedEvent) {
   const row = {
     id: randomUUID(),
     event_name: evt.event,
@@ -27,7 +22,11 @@ export function recordEvent(evt: TrackedEvent) {
     properties: JSON.stringify(evt.properties ?? {}),
     created_at: new Date().toISOString(),
   };
-  insertEvent.run(row);
+  await query(
+    `INSERT INTO events (id, event_name, user_id, session_id, properties, created_at)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [row.id, row.event_name, row.user_id, row.session_id, row.properties, row.created_at]
+  );
   console.log(
     `[analytics] ${row.event_name}`,
     JSON.stringify({
@@ -39,17 +38,16 @@ export function recordEvent(evt: TrackedEvent) {
   return row;
 }
 
-export function getEventsForSession(sessionId: string) {
-  return db
-    .prepare(
-      `SELECT event_name, user_id, session_id, properties, created_at
-       FROM events WHERE session_id = ? ORDER BY created_at ASC, rowid ASC`
-    )
-    .all(sessionId) as Array<{
+export async function getEventsForSession(sessionId: string) {
+  return query<{
     event_name: string;
     user_id: string | null;
     session_id: string;
     properties: string;
     created_at: string;
-  }>;
+  }>(
+    `SELECT event_name, user_id, session_id, properties, created_at
+     FROM events WHERE session_id = $1 ORDER BY seq ASC`,
+    [sessionId]
+  );
 }

@@ -17,10 +17,6 @@ export default defineConfig({
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
-    env: {
-      TRAILHEAD_DB_PATH: ":memory:",
-      PORT: String(PORT),
-    },
   },
   projects: [
     {

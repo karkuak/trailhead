@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { query } from "@/lib/db";
 import { getSessionUserId } from "@/lib/auth";
 import type { PlanId } from "@/lib/types";
 
@@ -32,23 +32,17 @@ export async function POST(request: Request) {
   const suggestedPlan = suggestPlan(experienceLevel);
   const now = new Date().toISOString();
 
-  db.prepare(
+  await query(
     `UPDATE users
-     SET experience_level = @experience_level,
-         goals = @goals,
-         season = @season,
-         suggested_plan = @suggested_plan,
-         plan = @suggested_plan,
-         onboarding_completed_at = @now
-     WHERE id = @id`
-  ).run({
-    id: userId,
-    experience_level: experienceLevel,
-    goals,
-    season,
-    suggested_plan: suggestedPlan,
-    now,
-  });
+     SET experience_level = $1,
+         goals = $2,
+         season = $3,
+         suggested_plan = $4,
+         plan = $4,
+         onboarding_completed_at = $5
+     WHERE id = $6`,
+    [experienceLevel, goals, season, suggestedPlan, now, userId]
+  );
 
   return NextResponse.json({ suggestedPlan, onboardingCompletedAt: now });
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { db } from "@/lib/db";
+import { queryOne, query } from "@/lib/db";
 import { hashPassword, setSessionUser } from "@/lib/auth";
 
 const TRIAL_DAYS = 14;
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const existing = db.prepare(`SELECT id FROM users WHERE email = ?`).get(email);
+  const existing = await queryOne(`SELECT id FROM users WHERE email = $1`, [email]);
   if (existing) {
     return NextResponse.json(
       { error: "An account with this email already exists." },
@@ -31,20 +31,13 @@ export async function POST(request: Request) {
   const userId = `user_${randomUUID()}`;
   const passwordHash = await hashPassword(password);
 
-  db.prepare(
+  await query(
     `INSERT INTO users (
       id, email, name, password_hash, subscription_status,
       trial_started_at, trial_ends_at, created_at
-    ) VALUES (@id, @email, @name, @password_hash, 'trialing', @trial_started_at, @trial_ends_at, @created_at)`
-  ).run({
-    id: userId,
-    email,
-    name,
-    password_hash: passwordHash,
-    trial_started_at: now.toISOString(),
-    trial_ends_at: trialEnds.toISOString(),
-    created_at: now.toISOString(),
-  });
+    ) VALUES ($1, $2, $3, $4, 'trialing', $5, $6, $7)`,
+    [userId, email, name, passwordHash, now.toISOString(), trialEnds.toISOString(), now.toISOString()]
+  );
 
   await setSessionUser(userId);
 

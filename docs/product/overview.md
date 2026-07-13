@@ -14,9 +14,11 @@ four release-critical journeys, per the [product strategy](../../trailhead-produ
 ## Architecture at a glance
 
 - **Next.js (App Router) + TypeScript**, single deployable app.
-- **SQLite** (`better-sqlite3`) as the persistence layer — one file, seeded deterministically on
-  first run (`src/lib/db.ts`, `src/lib/products.ts`). `TRAILHEAD_DB_PATH` controls the file location
-  so tests and preview environments get isolated, disposable databases.
+- **Postgres** (Neon, provisioned via the Vercel/Neon marketplace integration) as the persistence
+  layer, accessed with `pg` (`src/lib/db.ts`). Schema and product seed data
+  (`src/lib/products.ts`) are created idempotently on first connection via `ensureReady()` — no
+  manual migration step. Every environment (dev/preview/prod) gets its own Neon branch through the
+  integration, so state never leaks between them.
 - **Auth** is a minimal session-cookie model (`src/lib/auth.ts`): bcrypt-hashed passwords, an
   httpOnly `th_uid` cookie for the logged-in user, and an anonymous `th_sid` cookie (set by
   `src/proxy.ts` on every request) used for analytics correlation and experiment bucketing before and
@@ -30,18 +32,22 @@ four release-critical journeys, per the [product strategy](../../trailhead-produ
   - `orders.status`: `pending → paid` (or stays `pending` after a `failed` payment attempt, retryable).
   - `users.subscription_status`: `none → trialing → active → paused/canceled`.
 
-## Why SQLite for v1
+## Why Postgres (Neon) for v1
 
-Deterministic and seedable: the same schema and seed data run identically in dev, CI, Playwright
-tests, and preview deploys. No external service dependency to stand up for a first version. The
-`resetDatabase()` helper (test/preview-only, gated in `/api/test/reset`) gives every test a clean,
-known starting state.
+Serverless hosts like Vercel have a read-only filesystem outside `/tmp`, and `/tmp` isn't shared or
+persisted across function instances — a file-based database (the original v1 prototype used SQLite)
+can't give reliable persistence there. Neon's Vercel integration provisions a real Postgres database
+per environment with no separate account-creation step, and its branch-per-environment model gives
+previews and tests the same "isolated, disposable database" property SQLite files used to provide
+locally. The `resetDatabase()` helper (test/preview-only, gated in `/api/test/reset`) truncates and
+reseeds tables for a clean starting state before each E2E test.
 
 ## Local development
 
 ```bash
 npm install
-npm run dev       # http://localhost:3000
+vercel env pull .env.local   # fetches DATABASE_URL
+npm run dev                  # http://localhost:3000
 ```
 
 See the [README](../../README.md) for the full command reference.

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { db } from "@/lib/db";
+import { query, queryOne } from "@/lib/db";
 import { PRODUCTS } from "@/lib/products";
 import { getSessionUserId } from "@/lib/auth";
 import type { OrderRecord } from "@/lib/types";
@@ -54,9 +54,9 @@ export async function POST(request: Request) {
 
   let order: OrderRecord;
   if (existingOrderId) {
-    const found = db.prepare(`SELECT * FROM orders WHERE id = ?`).get(existingOrderId) as
-      | OrderRecord
-      | undefined;
+    const found = await queryOne<OrderRecord>(`SELECT * FROM orders WHERE id = $1`, [
+      existingOrderId,
+    ]);
     if (!found || found.status !== "pending") {
       return NextResponse.json({ error: "Order is not retryable." }, { status: 409 });
     }
@@ -64,53 +64,52 @@ export async function POST(request: Request) {
   } else {
     const id = `order_${randomUUID()}`;
     const now = new Date().toISOString();
-    db.prepare(
+    await query(
       `INSERT INTO orders (id, user_id, guest_email, status, total_cents, had_failed_attempt, created_at)
-       VALUES (@id, @user_id, @guest_email, 'pending', @total_cents, 0, @created_at)`
-    ).run({ id, user_id: userId ?? null, guest_email: guestEmail, total_cents: totalCents, created_at: now });
-
-    const insertItem = db.prepare(
-      `INSERT INTO order_items (id, order_id, product_id, quantity, price_cents)
-       VALUES (@id, @order_id, @product_id, @quantity, @price_cents)`
+       VALUES ($1, $2, $3, 'pending', $4, 0, $5)`,
+      [id, userId ?? null, guestEmail, totalCents, now]
     );
+
     for (const { product, quantity } of resolvedItems) {
-      insertItem.run({
-        id: `oi_${randomUUID()}`,
-        order_id: id,
-        product_id: product.id,
-        quantity,
-        price_cents: product.priceCents,
-      });
+      await query(
+        `INSERT INTO order_items (id, order_id, product_id, quantity, price_cents)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [`oi_${randomUUID()}`, id, product.id, quantity, product.priceCents]
+      );
     }
-    order = db.prepare(`SELECT * FROM orders WHERE id = ?`).get(id) as OrderRecord;
+    order = (await queryOne<OrderRecord>(`SELECT * FROM orders WHERE id = $1`, [id]))!;
   }
 
-  const priorFailedAttempts = db
-    .prepare(`SELECT COUNT(*) as n FROM payment_attempts WHERE order_id = ? AND status = 'failed'`)
-    .get(order.id) as { n: number };
-  const attemptNumber =
-    (db
-      .prepare(`SELECT COUNT(*) as n FROM payment_attempts WHERE order_id = ?`)
-      .get(order.id) as { n: number }).n + 1;
+  const priorFailedCount = await queryOne<{ n: string }>(
+    `SELECT COUNT(*) as n FROM payment_attempts WHERE order_id = $1 AND status = 'failed'`,
+    [order.id]
+  );
+  const totalAttemptsCount = await queryOne<{ n: string }>(
+    `SELECT COUNT(*) as n FROM payment_attempts WHERE order_id = $1`,
+    [order.id]
+  );
+  const priorFailedAttempts = Number(priorFailedCount?.n ?? 0);
+  const attemptNumber = Number(totalAttemptsCount?.n ?? 0) + 1;
 
-  const decision = cardDecision(cardNumber, priorFailedAttempts.n);
+  const decision = cardDecision(cardNumber, priorFailedAttempts);
   const last4 = cardNumber.slice(-4);
 
-  db.prepare(
+  await query(
     `INSERT INTO payment_attempts (id, order_id, attempt_number, card_last4, status, failure_reason, created_at)
-     VALUES (@id, @order_id, @attempt_number, @card_last4, @status, @failure_reason, @created_at)`
-  ).run({
-    id: `pay_${randomUUID()}`,
-    order_id: order.id,
-    attempt_number: attemptNumber,
-    card_last4: last4,
-    status: decision.status,
-    failure_reason: decision.reason ?? null,
-    created_at: new Date().toISOString(),
-  });
+     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    [
+      `pay_${randomUUID()}`,
+      order.id,
+      attemptNumber,
+      last4,
+      decision.status,
+      decision.reason ?? null,
+      new Date().toISOString(),
+    ]
+  );
 
   if (decision.status === "failed") {
-    db.prepare(`UPDATE orders SET had_failed_attempt = 1 WHERE id = ?`).run(order.id);
+    await query(`UPDATE orders SET had_failed_attempt = 1 WHERE id = $1`, [order.id]);
     return NextResponse.json({
       orderId: order.id,
       status: "failed",
@@ -120,11 +119,12 @@ export async function POST(request: Request) {
     });
   }
 
-  const recovered = priorFailedAttempts.n > 0;
+  const recovered = priorFailedAttempts > 0;
   const completedAt = new Date().toISOString();
-  db.prepare(
-    `UPDATE orders SET status = 'paid', completed_at = @completed_at WHERE id = @id`
-  ).run({ id: order.id, completed_at: completedAt });
+  await query(`UPDATE orders SET status = 'paid', completed_at = $1 WHERE id = $2`, [
+    completedAt,
+    order.id,
+  ]);
 
   return NextResponse.json({
     orderId: order.id,

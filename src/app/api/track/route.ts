@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   if (!body || typeof body.event !== "string" || typeof body.sessionId !== "string") {
     return NextResponse.json({ error: "invalid event payload" }, { status: 400 });
   }
-  const row = recordEvent({
+  const row = await recordEvent({
     event: body.event,
     userId: typeof body.userId === "string" ? body.userId : null,
     sessionId: body.sessionId,
