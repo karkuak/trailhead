@@ -25,6 +25,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # tests/e2e/ imports the TelemetryTest AI collector fixture, which vendors
+      # karkuak/qualiber (private, unpublished -- see integration/FRICTION-LOG.md). Requires a
+      # QUALIBER_PAT repo secret (fine-grained PAT, Contents:Read-only on qualiber only) since the
+      # default GITHUB_TOKEN can't access a different repo at all, even a private one under the
+      # same account.
+      - uses: actions/checkout@v4
+        with:
+          repository: karkuak/qualiber
+          ref: efe364d6d2e03ae531619f3b0e8319e532e8c0a3
+          path: .qualiber-vendor
+          token: ${{ secrets.QUALIBER_PAT }}
+
+      - name: Install qualiber deps
+        working-directory: .qualiber-vendor
+        run: npm ci
+
       # Requires a DATABASE_URL repo secret (a Neon Postgres connection
       # string) -- see docs/product/overview.md for why persistence is
       # Postgres rather than a local file.
