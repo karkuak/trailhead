@@ -1,0 +1,135 @@
+{
+  "evidence_package_version": "phase2q_gt_v1",
+  "decision_context_id": "dc_trailhead_j3_2026_07_13",
+  "journey_id": "checkout_payment_retry",
+  "decision_context": {
+    "requested_decision": "pr_review",
+    "product_area": "checkout",
+    "pr_id": "trailhead-PR-1"
+  },
+  "pilot_context": {
+    "mode": "external_design_partner",
+    "review_event": "Part B advanced-capability evaluation (Trailhead cold onboarding)",
+    "evidence_preparer": "trailhead-eng.local"
+  },
+  "issue": {
+    "issue_evidence_version": "1.0",
+    "source_id": "TRAIH-1",
+    "source_system": "jira",
+    "title": "checkout_payment_retry: order_completed never emitted on permanent card decline (false-positive-by-design finding)",
+    "description": "Real finding filed from Trailhead's own TelemetryTest AI integration (Part A, Step 3/9): validating the permanent-decline J3 capture against the checkout_payment_retry contract reports rule_violation_detected / missing_required_event: order_completed. This is correct-by-contract but false-positive-by-design (the test intentionally exercises the never-completes path). Filed live via the Atlassian MCP; referenced by a real signed waiver in the qualiber ledger.",
+    "acceptance_criteria": [
+      "Reviewer can see that payment_retry telemetry occurs before payment_success on the recovered path",
+      "A permanently-declined checkout is never miscounted as a completed purchase"
+    ],
+    "owner": "trailhead_growth_analytics",
+    "labels": [
+      "checkout",
+      "payments",
+      "telemetry"
+    ],
+    "journey_ids": [
+      "checkout_payment_retry"
+    ],
+    "scenario_id": "checkout_payment_permanent_decline",
+    "product_area": "checkout",
+    "source_updated_at": "2026-07-13T18:37:00Z",
+    "captured_at": "2026-07-13T20:42:00Z",
+    "freshness": "fresh",
+    "refs": [
+      {
+        "ref_id": "traih-1",
+        "source_type": "jira",
+        "uri": "https://karkuak.atlassian.net/browse/TRAIH-1"
+      }
+    ],
+    "content_hash": "sha256:bf7d37f89f5632a68a0a522fc21541bcb4f3219232100d3fbe86ac44eef50b3c"
+  },
+  "code": {
+    "code_evidence_version": "1.0",
+    "pr_id": "trailhead-PR-1",
+    "branch": "feature/telemetrytest-ai-integration",
+    "repository": "karkuak/trailhead",
+    "linked_issue_ids": [
+      "TRAIH-1"
+    ],
+    "changed_files": [
+      {
+        "path": "tests/e2e/j3-checkout.spec.ts",
+        "change_type": "modified"
+      },
+      {
+        "path": "tests/e2e/telemetrytest-fixture.ts",
+        "change_type": "added"
+      },
+      {
+        "path": "integration/contracts/checkout_payment_retry.contract.json",
+        "change_type": "added"
+      }
+    ],
+    "diff_summary": "Wires the vendored TelemetryTest AI Playwright collector into the real J3 checkout spec (payment retry after a declined card) via a parameterized fixture; adds the checkout_payment_retry tracking-rule contract authored from docs/analytics/tracking-plan.md.",
+    "component_hints": [
+      "payment",
+      "checkout"
+    ],
+    "service_hints": [
+      "checkout-web"
+    ],
+    "owner": "eng.local",
+    "source_updated_at": "2026-07-13T18:41:00Z",
+    "captured_at": "2026-07-13T20:42:00Z",
+    "freshness": "fresh",
+    "refs": [
+      {
+        "ref_id": "trailhead-pr-1",
+        "source_type": "github",
+        "uri": "https://github.com/karkuak/trailhead/pull/1"
+      }
+    ],
+    "diff_summary_hash": "sha256:0195a12faa710aa7ae8446802d25b690a2ea3e73844229011e6b5e5e190efa27",
+    "content_hash": "sha256:dd5589b92da4afbbe6b699ffce657246dc256c66abcdff42479099423dce6ea6"
+  },
+  "execution": {
+    "execution_evidence_version": "1.0",
+    "execution_id": "trailhead-j3-config-only-warehouse",
+    "collector_health": {
+      "health": "partial"
+    },
+    "deterministic_findings": [
+      {
+        "finding_id": "trailhead-j3-config-only-observed",
+        "rule_id": "checkout_payment_retry_sequence",
+        "outcome": "advisory_warning_only",
+        "severity": "info",
+        "message": "checkout_payment_retry sequence observed config-only across 3/4 warehouse sessions (session-correlated attribution).",
+        "refs": [
+          "warehouse:events (read-only)"
+        ]
+      }
+    ],
+    "config_only_telemetry": {
+      "source_type": "warehouse_telemetry",
+      "attribution": "session_correlated",
+      "config_only": true,
+      "max_association_band": "probably_associated",
+      "temporal_relation": "observed_production_path",
+      "observed_journey_instances": 4,
+      "journey_shape_matched_instances": 3,
+      "window": {
+        "from": "2026-07-14T11:59:00.000Z",
+        "to": "2026-07-14T13:00:00.000Z"
+      }
+    },
+    "refs": [
+      "warehouse:events (read-only)",
+      "sessions:4"
+    ]
+  },
+  "references": [
+    {
+      "ref_id": "gt-pkg-src",
+      "source_type": "manual_json",
+      "freshness": "fresh"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "risk_signature_version": "1.0",
+    "signature_id": "rs-trailhead-checkout-retry-cart-state",
+    "journey_id": "checkout_payment_retry",
+    "domain": "retail_checkout",
+    "source_type": "hand_seeded",
+    "source_version": "trailhead-seed-v1",
+    "created_at": "2026-07-13T20:42:00Z",
+    "ttl_days": 90,
+    "revalidate_by": "2026-10-11T20:42:00Z",
+    "status": "active",
+    "applies_to": {
+      "components": ["payment", "checkout"],
+      "events": ["payment_retried", "payment_submitted"]
+    },
+    "risk": "Payment retry after a declined card may lose cart, coupon, or inventory-hold state before the second payment_submitted.",
+    "recommended_validation": [
+      "Verify cart contents survive a failed authorization plus retry (Trailhead J3).",
+      "Verify order_completed is only ever emitted for a genuinely completed purchase, never a permanently-declined attempt (TRAIH-1)."
+    ],
+    "confidence": "medium",
+    "not_allowed_to_gate": true
+  }
+]

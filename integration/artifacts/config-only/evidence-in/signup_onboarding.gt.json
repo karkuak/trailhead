@@ -1,0 +1,39 @@
+{
+  "evidence_package_version": "phase2q_gt_v1",
+  "decision_context_id": "dc_trailhead_j1_thin_2026_07_13",
+  "journey_id": "signup_onboarding",
+  "decision_context": {
+    "requested_decision": "qa_review"
+  },
+  "pilot_context": {
+    "mode": "external_design_partner",
+    "review_event": "Part B thin-evidence sufficiency probe",
+    "evidence_preparer": "trailhead-eng.local"
+  },
+  "execution": {
+    "execution_evidence_version": "1.0",
+    "execution_id": "trailhead-j1-thin-run",
+    "linked_telemetrytest_run": {
+      "run_id": "j1-signup-run",
+      "run_status": "clean",
+      "validation_evidence_pack_id": "evp_b758f5b4c4d7"
+    },
+    "collector_health": {
+      "health": "healthy"
+    },
+    "deterministic_findings": [],
+    "vqs_band": "Strong",
+    "vqs_score": 90,
+    "vqs_cold_start": true,
+    "refs": [
+      "evp_b758f5b4c4d7"
+    ]
+  },
+  "references": [
+    {
+      "ref_id": "gt-pkg-src",
+      "source_type": "manual_json",
+      "freshness": "fresh"
+    }
+  ]
+}
