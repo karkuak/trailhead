@@ -20,6 +20,16 @@ export function CheckoutForm({ variant }: { variant: Variant }) {
   const [failureReason, setFailureReason] = useState<string | null>(null);
   const [recovered, setRecovered] = useState(false);
   const startedTracked = useRef(false);
+  const retryTracked = useRef(false);
+
+  // Track payment_retried only once the retry has genuinely recovered the order — it used to
+  // fire optimistically on every retry click, even when that retry then failed too.
+  useEffect(() => {
+    if (status === "paid" && recovered && !retryTracked.current) {
+      analytics.track("payment_retried", { orderId, previousAttempt: attempt - 1 });
+      retryTracked.current = true;
+    }
+  }, [status, recovered, orderId, attempt]);
 
   useEffect(() => {
     if (items.length > 0 && !startedTracked.current) {
@@ -68,11 +78,6 @@ export function CheckoutForm({ variant }: { variant: Variant }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!user && !guestEmail) return;
-
-    const isRetry = status === "failed";
-    if (isRetry) {
-      analytics.track("payment_retried", { orderId, previousAttempt: attempt });
-    }
 
     setStatus("submitting");
     const nextAttempt = attempt + 1;
